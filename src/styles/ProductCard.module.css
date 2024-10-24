@@ -1,0 +1,55 @@
+/* src/styles/ProductCard.module.css */
+.productCard {
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  /* gap: 5px; */
+  justify-content: space-between;
+  height: 100%; /* Задаємо повну висоту картки */
+  /* margin: 0; */
+  overflow: hidden; /* Обрізаємо вміст, що виходить за межі */
+  box-sizing: border-box; /* Враховуємо padding у розмірах */
+}
+
+.productCard:hover {
+  transform: scale(1.05);
+}
+
+.productImage {
+  /* max-width: 100%; Зображення займатиме всю ширину контейнера */
+  width: 100%;
+  height: auto; /* Зберігаємо співвідношення сторін */
+  object-fit: contain; /* Забезпечуємо відображення всього зображення, не обрізаючи його */
+  /* margin-bottom: 10px; */
+  align-self: flex-start;
+}
+
+/* .productCard p {
+    margin: 0;
+  }
+  
+  .productCard h3 {
+    margin: 0;
+  } */
+
+.productInfo {
+  /* display: flex;
+    flex-direction: column;
+    justify-content: flex-start; Розміщення назви та ціни внизу картки
+    flex-grow: 1; Забезпечує заповнення простору */
+  margin-top: auto; /* Прив'язуємо цей блок до нижньої частини картки */
+}
+
+.productName {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.productPrice {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e74c3c;
+}

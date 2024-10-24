@@ -1,0 +1,208 @@
+/* src/styles/ProductDetail.module.css */
+.productDetail {
+  display: flex;
+  margin: 20px;
+  gap: 20px;
+  flex-wrap: wrap; /* Дозволяємо обтікання рядків */
+}
+
+/* Контейнер для кнопки "Назад" */
+.backButtonContainer {
+  width: 100%; /* Займає всю ширину сторінки */
+  margin-bottom: 0; /* Відступ знизу */
+}
+
+/* Додаємо стилі для кнопки "Назад" */
+.backButton {
+  display: inline-block;
+  padding: 5px 8px;
+  background-color: #6c757d;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  /* margin-bottom: 20px; */
+  transition: background-color 0.3s;
+}
+
+.backButton:hover {
+  background-color: #025aa5;
+}
+
+[data-theme="dark"] .backButton {
+  background-color: #444;
+}
+
+[data-theme="dark"] .backButton:hover {
+  background-color: #666;
+}
+
+/* Ліва колонка */
+.leftColumn {
+  width: 400px; /* Встановлюємо ширину лівої колонки */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Рівняємо по лівому краю */
+}
+
+.mainImage {
+  width: 400px; /* Встановлюємо ширину */
+  height: 500px; /* Встановлюємо висоту */
+  object-fit: cover; /* Заповнюємо область фото */
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.thumbnailContainer {
+  display: flex;
+  flex-wrap: wrap; /* Дозволяємо обтікання рядків */
+  gap: 10px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover; /* Заповнюємо область фото */
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: border 0.2s;
+}
+
+.thumbnail:hover {
+  border: 1px solid #000;
+}
+
+.selectedThumbnail {
+  border: 1px solid #000;
+}
+
+.description {
+  margin-top: 15px;
+  text-align: left;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+}
+
+/* Права колонка */
+.rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Розміщуємо по центру */
+  gap: 20px;
+  padding-top: 30px;
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Вирівнюємо текст по центру */
+  gap: 5px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.status {
+  font-size: 16px;
+  color: #5cb85c;
+}
+
+/* Секція для додавання до кошика */
+.addToCartSection {
+  display: flex;
+  flex-direction: column; /* Розміщуємо елементи один під одним */
+  align-items: center;
+  gap: 10px;
+}
+
+.quantitySelector {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+}
+
+.addToCartButton {
+  padding: 10px 15px;
+  background-color: #0275d8;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addToCartButton:hover {
+  background-color: #025aa5;
+}
+
+/* Характеристики */
+.specifications {
+  margin-top: 20px;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+.specifications:hover {
+  background-color: #f8f8f8;
+}
+
+.specificationList {
+  display: none; /* Спочатку приховуємо список */
+}
+
+.specifications.open .specificationList {
+  display: block; /* Показуємо список при розгортанні */
+}
+
+/* ============ Медіа-запити для респонсивності ============ */
+
+/* Для екранів менше 768px */
+@media (max-width: 768px) {
+  .productDetail {
+    flex-direction: column; /* Переміщуємо елементи один під іншим */
+    align-items: center; /* Вирівнюємо по центру */
+  }
+
+  .leftColumn,
+  .rightColumn {
+    width: 100%; /* Робимо елементи займати всю ширину */
+    align-items: center; /* Розміщуємо по центру */
+  }
+
+  .mainImage {
+    width: 100%; /* Змінюємо ширину на 100% від батьківського контейнера */
+    max-width: 300px; /* Максимальна ширина для основного фото */
+    height: auto; /* Зберігаємо пропорції зображення */
+  }
+
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .thumbnailContainer {
+    justify-content: center; /* Рівняємо додаткові фото по центру */
+  }
+
+  .rightColumn {
+    align-items: center;
+    padding-top: 20px;
+  }
+}
+
+/* Для екранів менше 480px */
+@media (max-width: 480px) {
+  .mainImage {
+    max-width: 250px; /* Ще більше зменшуємо максимальний розмір */
+  }
+
+  .thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+}
