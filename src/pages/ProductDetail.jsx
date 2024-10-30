@@ -12,7 +12,7 @@ const ProductDetail = () => {
   const [specsOpen, setSpecsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const backendUrl = "http://116.203.106.75:1337"; // Визначаємо тут
+  const backendUrl = "https://116.203.106.75:1337"; // Визначаємо тут
 
   useEffect(() => {
     const fetchProduct = async () => {

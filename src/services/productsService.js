@@ -15,7 +15,7 @@
 
 import axios from "axios";
 
-const API_URL = "http://116.203.106.75:1337/api/products";
+const API_URL = "https://116.203.106.75:1337/api/products";
 
 export const fetchProducts = async () => {
   try {

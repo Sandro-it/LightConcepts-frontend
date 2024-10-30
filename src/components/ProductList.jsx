@@ -11,7 +11,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const backendUrl = "http://116.203.106.75:1337"; // Змінюємо відповідно до адреси сервера
+        const backendUrl = "https://116.203.106.75:1337"; // Змінюємо відповідно до адреси сервера
         const response = await axios.get(
           `${backendUrl}/api/products?populate=*`
         );

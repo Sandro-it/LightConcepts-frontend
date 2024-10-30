@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  const backendUrl = "http://116.203.106.75:1337"; // Базова URL-адреса Strapi
+  const backendUrl = "https://116.203.106.75:1337"; // Базова URL-адреса Strapi
 
   const imageUrl = product?.mainImage?.formats?.thumbnail?.url
     ? `${backendUrl}${product.mainImage.formats.thumbnail.url}`
