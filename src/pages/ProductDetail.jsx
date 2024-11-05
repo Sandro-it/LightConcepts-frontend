@@ -1,6 +1,113 @@
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useParams, useNavigate } from "react-router-dom";
+// import styles from "../styles/ProductDetail.module.css";
+
+// const ProductDetail = () => {
+//   const { id } = useParams();
+//   const [product, setProduct] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [selectedImage, setSelectedImage] = useState(null);
+//   const [specsOpen, setSpecsOpen] = useState(false);
+//   const navigate = useNavigate();
+
+//   const backendUrl = "http://116.203.106.75:1337"; // Виправлено на IP-адресу сервера
+
+//   useEffect(() => {
+//     const fetchProduct = async () => {
+//       try {
+//         const response = await axios.get(
+//           `${backendUrl}/api/products?filters[id][$eq]=${id}&populate=*`
+//         );
+//         const productData = response.data.data[0];
+//         if (productData) {
+//           setProduct(productData);
+//           const mainImageUrl = productData.mainImage?.url
+//             ? `${backendUrl}${productData.mainImage.url}`
+//             : "/placeholder.jpg";
+//           setSelectedImage(mainImageUrl);
+//         } else {
+//           setError("Продукт не знайдено");
+//         }
+//         setLoading(false);
+//       } catch (error) {
+//         console.error("Помилка завантаження деталей товару:", error);
+//         setError("Помилка завантаження деталей товару");
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProduct();
+//   }, [id]);
+
+//   if (loading) return <p>Завантаження...</p>;
+//   if (error) return <p>{error}</p>;
+
+//   return (
+//     <div className={styles.productDetail}>
+//       <div className={styles.backButtonContainer}>
+//         <button onClick={() => navigate(-1)} className={styles.backButton}>
+//           Назад
+//         </button>
+//       </div>
+
+//       <div className={styles.leftColumn}>
+//         <img
+//           src={selectedImage}
+//           alt={product.name || "Зображення продукту"}
+//           className={styles.mainImage}
+//         />
+//         <div className={styles.thumbnailContainer}>
+//           {product.additionalImages?.map((image, index) => (
+//             <img
+//               key={index}
+//               src={`${backendUrl}${image.url}`}
+//               alt={`Додаткове зображення ${index + 1}`}
+//               className={`${styles.thumbnail} ${
+//                 selectedImage === `${backendUrl}${image.url}`
+//                   ? styles.selectedThumbnail
+//                   : ""
+//               }`}
+//               onClick={() => setSelectedImage(`${backendUrl}${image.url}`)}
+//             />
+//           ))}
+//         </div>
+//       </div>
+
+//       <div className={styles.rightColumn}>
+//         <h1 className={styles.productName}>{product.name || "Без назви"}</h1>
+//         <p className={styles.description}>
+//           {product.description || "Опис відсутній"}
+//         </p>
+//         <p className={styles.price}>
+//           {product.price ? `${product.price} грн` : "Ціна не вказана"}
+//         </p>
+//         <div className={styles.addToCartSection}>
+//           {/* Приклад секції додавання до кошика */}
+//           <button className={styles.addToCartButton}>Додати до кошика</button>
+//         </div>
+//         <div
+//           className={`${styles.specifications} ${specsOpen ? "open" : ""}`}
+//           onClick={() => setSpecsOpen(!specsOpen)}
+//         >
+//           Характеристики
+//           <div className={styles.specificationList}>
+//             {/* Список характеристик товару */}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetail;
+
+//==============================HTTPS=================================//
+
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "../styles/ProductDetail.module.css";
 
 const ProductDetail = () => {
@@ -12,7 +119,7 @@ const ProductDetail = () => {
   const [specsOpen, setSpecsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const backendUrl = "https://116.203.106.75:1337"; // Визначаємо тут
+  const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -23,7 +130,7 @@ const ProductDetail = () => {
         const productData = response.data.data[0];
         if (productData) {
           setProduct(productData);
-          const mainImageUrl = productData?.mainImage?.url
+          const mainImageUrl = productData.mainImage?.url
             ? `${backendUrl}${productData.mainImage.url}`
             : "/placeholder.jpg";
           setSelectedImage(mainImageUrl);
@@ -44,52 +151,6 @@ const ProductDetail = () => {
   if (loading) return <p>Завантаження...</p>;
   if (error) return <p>{error}</p>;
 
-  const {
-    name = "Назва відсутня",
-    description = "Опис відсутній",
-    price = "Ціна не вказана",
-    available = false,
-    article = "Не вказано",
-    category = { name: "Категорія не вказана" },
-    sub_category = { name: "Підкатегорія не вказана" },
-    specifications = {},
-    mainImage = {},
-    additionalImages = [],
-  } = product || {};
-
-  const categoryName = category?.name || "Категорія не вказана";
-  const subCategoryName = sub_category?.name || "Підкатегорія не вказана";
-
-  const generateCategoryPath = (categoryName) => {
-    if (typeof categoryName !== "string") return "#";
-    switch (categoryName.toLowerCase()) {
-      case "світильники":
-        return "/lights-category";
-      case "бра":
-        return "/bra";
-      case "настінні світильники":
-        return "/wall-lights";
-      case "світильник підвісний":
-        return "/pendant-lights";
-      case 'світильники "стімпанк"':
-        return "/steampunk-lights";
-      case "свічки":
-        return "/candles-category";
-      case "меблі":
-        return "/furniture-category";
-      default:
-        return "#";
-    }
-  };
-
-  const handleThumbnailClick = (url) => {
-    setSelectedImage(`${backendUrl}${url}`);
-  };
-
-  const toggleSpecifications = () => {
-    setSpecsOpen(!specsOpen);
-  };
-
   return (
     <div className={styles.productDetail}>
       <div className={styles.backButtonContainer}>
@@ -99,78 +160,47 @@ const ProductDetail = () => {
       </div>
 
       <div className={styles.leftColumn}>
-        <h4>
-          <Link to={generateCategoryPath(categoryName)} className={styles.link}>
-            {categoryName}
-          </Link>{" "}
-          /{" "}
-          <Link
-            to={generateCategoryPath(subCategoryName)}
-            className={styles.link}
-          >
-            {subCategoryName}
-          </Link>
-        </h4>
         <img
-          src={selectedImage ? selectedImage : "/placeholder.jpg"}
-          alt={name || "Назва відсутня"}
+          src={selectedImage}
+          alt={product.name || "Зображення продукту"}
           className={styles.mainImage}
         />
         <div className={styles.thumbnailContainer}>
-          {additionalImages?.map((image, index) => {
-            const imageUrl = image?.url ? `${backendUrl}${image.url}` : null;
-            return imageUrl ? (
-              <img
-                key={index}
-                src={imageUrl}
-                alt={`Зображення ${index + 1}`}
-                className={`${styles.thumbnail} ${
-                  selectedImage === imageUrl ? styles.selectedThumbnail : ""
-                }`}
-                onClick={() => handleThumbnailClick(image.url)}
-              />
-            ) : null;
-          })}
+          {product.additionalImages?.map((image, index) => (
+            <img
+              key={index}
+              src={`${backendUrl}${image.url}`}
+              alt={`Додаткове зображення ${index + 1}`}
+              className={`${styles.thumbnail} ${
+                selectedImage === `${backendUrl}${image.url}`
+                  ? styles.selectedThumbnail
+                  : ""
+              }`}
+              onClick={() => setSelectedImage(`${backendUrl}${image.url}`)}
+            />
+          ))}
         </div>
-        <p className={styles.description}>{description}</p>
       </div>
 
       <div className={styles.rightColumn}>
-        <div className={styles.productInfo}>
-          <h2>{name}</h2>
-          <p>Артикул: {article}</p>
-          <p className={styles.price}>
-            {price !== "Ціна не вказана" ? `${price} грн` : price}
-          </p>
-          <p className={styles.status}>
-            {available ? "В наявності" : "Немає в наявності"}
-          </p>
-        </div>
-
+        <h1 className={styles.productName}>{product.name || "Без назви"}</h1>
+        <p className={styles.description}>
+          {product.description || "Опис відсутній"}
+        </p>
+        <p className={styles.price}>
+          {product.price ? `${product.price} грн` : "Ціна не вказана"}
+        </p>
         <div className={styles.addToCartSection}>
-          <input
-            type="number"
-            min="1"
-            defaultValue="1"
-            className={styles.quantitySelector}
-          />
           <button className={styles.addToCartButton}>Додати до кошика</button>
         </div>
-
         <div
-          className={`${styles.specifications} ${specsOpen ? styles.open : ""}`}
-          onClick={toggleSpecifications}
+          className={`${styles.specifications} ${specsOpen ? "open" : ""}`}
+          onClick={() => setSpecsOpen(!specsOpen)}
         >
-          <h3>Характеристики</h3>
-          {specsOpen && (
-            <div className={styles.specificationList}>
-              {Object.entries(specifications).map(([key, value], index) => (
-                <p key={index}>
-                  <strong>{key}: </strong> {value}
-                </p>
-              ))}
-            </div>
-          )}
+          Характеристики
+          <div className={styles.specificationList}>
+            {/* Список характеристик товару */}
+          </div>
         </div>
       </div>
     </div>
