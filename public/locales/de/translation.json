@@ -1,0 +1,13 @@
+{
+  "welcome": "Willkommen im Geschäft",
+  "products": "Produkte",
+  "home": "Startseite",
+  "resilience": "Unzerbrechlichkeit",
+  "contact": "Kontakt",
+  "shipping": "Versand",
+  "categories": {
+    "lights": "Lampen",
+    "candles": "Kerzen",
+    "furniture": "Möbel"
+  }
+}

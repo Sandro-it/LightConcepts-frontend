@@ -1,0 +1,13 @@
+{
+  "welcome": "Ласкаво просимо до магазину",
+  "products": "Товари",
+  "home": "Головна",
+  "resilience": "Незламність",
+  "contact": "Контакти",
+  "shipping": "Доставка",
+  "categories": {
+    "lights": "Світильники",
+    "candles": "Свічки",
+    "furniture": "Меблі"
+  }
+}

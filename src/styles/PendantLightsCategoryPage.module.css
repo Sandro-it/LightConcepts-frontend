@@ -1,0 +1,33 @@
+.pendantLightsCategoryPage {
+  padding: 20px;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Стилі для кнопки "Назад" */
+.backButton {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #6c757d;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.backButton:hover {
+  background-color: #025aa5;
+}
+
+[data-theme="dark"] .backButton {
+  background-color: #444;
+}
+
+[data-theme="dark"] .backButton:hover {
+  background-color: #666;
+}

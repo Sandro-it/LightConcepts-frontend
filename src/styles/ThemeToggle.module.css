@@ -1,0 +1,48 @@
+/* ThemeToggle.module.css */
+.themeToggle {
+  background-color: transparent; /* Початковий фон прозорий */
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem; /* Розмір іконки */
+  color: inherit; /* Використовуємо поточний колір тексту */
+  padding: 10px;
+  width: 40px; /* Встановлюємо однакову ширину та висоту */
+  height: 40px; /* Встановлюємо однакову ширину та висоту */
+  border-radius: 50%; /* Робимо кнопку круглою */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Додаємо анімацію */
+}
+
+[data-theme="light"] .themeToggle {
+  color: #e65411; /* Колір іконки сонця на яскраво-жовтий */
+}
+
+[data-theme="light"] .themeToggle:hover {
+  color: #e4260d; /* Колір іконки при наведенні в світлій темі */
+  background-color: #e0e0e0; /* Фон кнопки при наведенні в світлій темі */
+}
+
+[data-theme="dark"] .themeToggle {
+  color: #f0c808; /* Колір для іконки місяця */
+}
+
+[data-theme="dark"] .themeToggle:hover {
+  color: #e0a700; /* Колір іконки при наведенні в темній темі */
+  background-color: #555; /* Фон кнопки при наведенні в темній темі */
+}
+
+/* Адаптивні стилі для кнопки перемикання теми */
+@media (max-width: 800px) {
+  .themeToggle {
+    font-size: 1rem; /* Зменшуємо розмір іконки на менших екранах */
+    width: 36px; /* Зменшуємо ширину кнопки на менших екранах */
+    height: 36px; /* Зменшуємо висоту кнопки на менших екранах */
+    padding: 8px; /* Зменшуємо padding на менших екранах */
+  }
+}
+
+/* Адаптивні стилі для зменшення gap */
+@media (max-width: 800px) {
+  .switchersContainer {
+    gap: 15px; /* Зменшуємо відступ між елементами */
+  }
+}

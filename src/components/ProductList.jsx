@@ -8,7 +8,7 @@
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 
-//   const backendUrl = "http://116.203.106.75:1337"; // Виправлено на IP-адресу сервера
+//   const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
 
 //   useEffect(() => {
 //     const fetchProducts = async () => {
@@ -42,8 +42,6 @@
 
 // export default ProductList;
 
-//==============================HTTPS=================================//
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../styles/ProductList.module.css";
@@ -54,14 +52,14 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        const backendUrl = import.meta.env.VITE_BACKEND_URL; // Використовуємо URL із змінного середовища
         const response = await axios.get(
           `${backendUrl}/api/products?populate=*`
         );
+        console.log("Отримані продукти зі Strapi:", response.data.data);
         setProducts(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -76,6 +74,8 @@ const ProductList = () => {
 
   if (loading) return <p>Завантаження...</p>;
   if (error) return <p>{error}</p>;
+
+  console.log("Products list для відображення:", products);
 
   return (
     <div className={styles.productList}>

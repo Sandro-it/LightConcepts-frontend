@@ -1,4 +1,56 @@
-.app-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
+/* Стилі для контейнера основного контенту */
+.container {
+  width: 100%;
+  /* padding: 15px; */
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .container {
+    /* padding: 20px; */
+  }
+}
+
+@media (min-width: 900px) {
+  .container {
+    max-width: 720px;
+    /* padding: 30px; */
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 960px;
+    /* padding: 40px; */
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1140px;
+    /* padding: 50px; */
+  }
+}
+
+/* Стилі для контейнера в хедері */
+.headerContainer {
+  width: 100%;
+  padding: 0; /* Прибираємо padding для хедера */
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* App.css */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Мінімальна висота 100vh для повного заповнення екрану */
+}
+
+.content {
+  flex: 1; /* Забезпечує, що цей контейнер розширюється, займаючи весь доступний простір */
 }

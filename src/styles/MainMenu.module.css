@@ -1,0 +1,143 @@
+/* MainMenu.module.css */
+
+/* Базові стилі для мобільних пристроїв (320px і більше) */
+.mainMenuNavLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mainMenuNavItem {
+  position: relative;
+  cursor: pointer;
+}
+
+.mainMenuNavLink {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.mainMenuNavLink:hover,
+.mainMenuNavLink:focus {
+  color: var(--hover-text-color-light);
+}
+
+[data-theme="dark"] .mainMenuNavLink {
+  color: var(--text-color-dark);
+}
+
+[data-theme="dark"] .mainMenuNavLink:hover,
+[data-theme="dark"] .mainMenuNavLink:focus {
+  color: var(--hover-text-color-dark);
+}
+
+.mainMenuSubMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  background-color: var(--background-color-light);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.mainMenuNavItem:hover .mainMenuSubMenu,
+.mainMenuNavItem:focus-within .mainMenuSubMenu {
+  display: flex;
+}
+
+.mainMenuSubMenuItem {
+  padding: 5px;
+  color: var(--text-color-light);
+  text-decoration: none;
+  display: block;
+}
+
+.mainMenuSubMenuItem:hover,
+.mainMenuSubMenuItem:focus {
+  background-color: var(--background-color-light-hover);
+}
+
+[data-theme="dark"] .mainMenuSubMenuItem {
+  color: var(--text-color-dark);
+}
+
+[data-theme="dark"] .mainMenuSubMenuItem:hover,
+[data-theme="dark"] .mainMenuSubMenuItem:focus {
+  background-color: var(--background-color-dark-hover);
+}
+
+/* Адаптивні стилі для екранів до 900px */
+@media (max-width: 900px) {
+  .mainMenuNavLinks {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .mainMenuNavLink {
+    font-size: 0.9rem;
+  }
+
+  .mainMenuNavItem {
+    white-space: nowrap;
+  }
+}
+
+/* Адаптивні стилі для екранів від 600px до 719px */
+@media (min-width: 600px) and (max-width: 719px) {
+  .mainMenuNavLinks {
+    flex-direction: row;
+    gap: 5px; /* Зменшуємо відстань між елементами */
+  }
+
+  .mainMenuNavLink {
+    font-size: 0.8rem; /* Зменшуємо розмір шрифту */
+  }
+}
+
+/* Адаптивні стилі для середніх екранів (720px до 899px) */
+@media (min-width: 720px) and (max-width: 899px) {
+  .mainMenuNavLinks {
+    flex-direction: row;
+    gap: 10px; /* Відстань між елементами для середніх екранів */
+  }
+
+  .mainMenuNavLink {
+    font-size: 0.85rem; /* Розмір шрифту для середніх екранів */
+  }
+}
+
+/* Адаптивні стилі для планшетів (900px і більше) */
+@media (min-width: 900px) {
+  .mainMenuNavLinks {
+    flex-direction: row;
+    gap: 20px; /* Відстань між елементами для планшетів */
+  }
+
+  .mainMenuNavLink {
+    font-size: 1rem; /* Розмір шрифту для планшетів */
+  }
+}
+
+/* Адаптивні стилі для великих десктопів (1600px і більше) */
+@media (min-width: 1600px) {
+  .mainMenuNavLinks {
+    gap: 25px; /* Збільшуємо проміжок для великих екранів */
+  }
+
+  .mainMenuNavLink {
+    font-size: 1.2rem; /* Розмір шрифту для великих екранів */
+  }
+}

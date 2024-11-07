@@ -2,7 +2,7 @@
 // import styles from "../styles/ProductCard.module.css";
 
 // const ProductCard = ({ product }) => {
-//   const backendUrl = "http://116.203.106.75:1337"; // Виправлено на IP-адресу сервера
+//   const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
 //   const imageUrl = product?.mainImage?.formats?.thumbnail?.url
 //     ? `${backendUrl}${product.mainImage.formats.thumbnail.url}`
 //     : product?.mainImage?.url
@@ -30,27 +30,32 @@
 
 // export default ProductCard;
 
-//==============================HTTPS=================================//
-
 import { Link } from "react-router-dom";
 import styles from "../styles/ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
-  const imageUrl = product?.mainImage?.formats?.thumbnail?.url
-    ? `${backendUrl}${product.mainImage.formats.thumbnail.url}`
-    : product?.mainImage?.url
+  console.log("Product data received in ProductCard:", product);
+
+  // Оновлений шлях до зображення з використанням VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const imageUrl = product?.mainImage?.url
     ? `${backendUrl}${product.mainImage.url}`
     : "/placeholder.jpg";
 
   return (
     <Link to={`/products/${product.id}`} className={styles.productLink}>
       <div className={styles.productCard}>
-        <img
-          src={imageUrl}
-          alt={product.name || "Невідомий продукт"}
-          className={styles.productImage}
-        />
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={product.name || "Невідомий продукт"}
+            className={styles.productImage}
+          />
+        ) : (
+          <div className={styles.productImagePlaceholder}>
+            Зображення відсутнє
+          </div>
+        )}
         <div className={styles.productInfo}>
           <h3 className={styles.productName}>{product.name || "Без назви"}</h3>
           <p className={styles.productPrice}>

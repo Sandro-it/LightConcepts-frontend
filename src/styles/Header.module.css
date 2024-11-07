@@ -1,0 +1,140 @@
+/* Header.module.css */
+
+/* Базові стилі для мобільних пристроїв (320px і більше) */
+.header {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 10px 0;
+  font-weight: 400;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.headerNavContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerMenuButton {
+  display: block; /* Відображається на малих екранах */
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.headerNavAndSwitchersContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.headerNav {
+  display: none; /* Приховано на малих екранах */
+}
+
+.headerNavOpen {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-color);
+  padding-top: 50px;
+  text-align: center;
+  z-index: 10;
+}
+
+.headerSwitchersContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.headerIconButton {
+  font-size: 1.2rem;
+  padding: 10px;
+}
+
+.headerOverlay {
+  display: none;
+}
+
+/* Адаптивні стилі для планшетів (700px і більше) */
+@media (min-width: 700px) {
+  .headerNav {
+    display: flex; /* Робимо навігацію горизонтальною */
+  }
+
+  .headerNavOpen {
+    display: none; /* Приховуємо вертикальне меню на більших екранах */
+  }
+
+  .headerMenuButton {
+    display: none; /* Приховуємо кнопку меню на планшетах */
+  }
+
+  .headerNavAndSwitchersContainer {
+    flex-direction: row; /* Робимо контейнери в один ряд */
+  }
+
+  .headerSwitchersContainer {
+    gap: 10px;
+  }
+
+  .headerNavContainer {
+    width: 100%; /* Забезпечує, що контейнер меню займає всю ширину */
+  }
+}
+
+@media (min-width: 900px) {
+  .headerNavAndSwitchersContainer {
+    flex-direction: row; /* Робимо елементи в один ряд */
+    align-items: center; /* Центруємо елементи по вертикалі */
+    justify-content: space-between; /* Розміщуємо елементи по різні сторони */
+    width: 100%;
+  }
+
+  .headerNav {
+    display: flex; /* Горизонтальне меню для десктопів */
+    justify-content: flex-start; /* Розташовуємо навігацію зліва */
+    align-items: center;
+  }
+
+  .headerSwitchersContainer {
+    justify-content: flex-end; /* Розташовуємо кнопки та іконки справа */
+    align-items: center;
+  }
+}
+
+/* Темна тема для header */
+[data-theme="dark"] .header {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+[data-theme="dark"] .headerMenuButton {
+  color: var(--text-color-dark);
+}
+
+[data-theme="dark"] .headerIconButton {
+  color: var(--text-color-dark);
+}
+
+[data-theme="dark"] .headerNavOpen {
+  background-color: var(--background-color-dark);
+}
+
+[data-theme="dark"] .headerOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .headerSwitchersContainer a:hover,
+[data-theme="dark"] .headerSwitchersContainer a:focus {
+  color: var(--hover-text-color-dark);
+}

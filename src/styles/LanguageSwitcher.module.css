@@ -1,0 +1,103 @@
+.languageSwitcher {
+  position: relative;
+  display: inline-block;
+}
+
+.languageButton {
+  background-color: inherit;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Додаємо анімацію */
+}
+
+.languageButton img {
+  width: 24px; /* Встановлення розміру прапора */
+  height: auto; /* Збереження пропорцій прапора */
+}
+
+.languageButton:hover {
+  background-color: #244e86; /* Колір фону при наведенні */
+}
+
+.languageList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: inherit;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 5px;
+  list-style: none;
+  padding: 0;
+  z-index: 1000;
+}
+
+.languageList li {
+  display: flex; /* Використовуємо flex для вирівнювання іконки та тексту */
+  align-items: center; /* Вирівнювання по вертикалі */
+  padding: 8px 16px;
+  cursor: pointer;
+  color: white; /* Залишаємо колір тексту білим */
+  transition: background-color 0.3s ease; /* Додаємо анімацію */
+}
+
+.languageList li img {
+  width: 20px; /* Встановлення розміру прапора у списку */
+  height: auto; /* Збереження пропорцій прапора */
+  margin-right: 10px; /* Відступ між прапором та текстом */
+}
+
+.languageList li:hover {
+  background-color: #244e86; /* Темніший фон при наведенні */
+}
+
+/* Адаптивні стилі для мобільних пристроїв */
+@media (max-width: 768px) {
+  .languageButton {
+    font-size: 14px; /* Зменшення шрифту для мобільних пристроїв */
+  }
+}
+
+/* Стилі для темної теми */
+[data-theme="dark"] .languageButton {
+  /* background-color: #333; Темний фон для кнопки */
+}
+
+[data-theme="dark"] .languageButton:hover {
+  background-color: #555; /* Додаємо ефект ховеру для темної теми */
+}
+
+[data-theme="dark"] .languageList {
+  background-color: #333; /* Темний фон для списку */
+}
+
+[data-theme="dark"] .languageList li {
+  color: white; /* Текст залишається білим у темній темі */
+}
+
+[data-theme="dark"] .languageList li:hover {
+  background-color: #555; /* Темніший фон при наведенні */
+}
+
+/* Стилі для світлої теми */
+[data-theme="light"] .languageButton {
+  /* background-color: #f0f0f0; Світлий фон для кнопки */
+}
+
+[data-theme="light"] .languageButton:hover {
+  background-color: #e0e0e0; /* Світліший фон при наведенні */
+}
+
+[data-theme="light"] .languageList {
+  background-color: #f0f0f0; /* Світлий фон для списку */
+}
+
+[data-theme="light"] .languageList li {
+  color: #333; /* Текст темний у світлій темі */
+}
+
+[data-theme="light"] .languageList li:hover {
+  background-color: #e0e0e0; /* Світліший фон при наведенні */
+}

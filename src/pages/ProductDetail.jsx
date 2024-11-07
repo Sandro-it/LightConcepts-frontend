@@ -12,7 +12,7 @@
 //   const [specsOpen, setSpecsOpen] = useState(false);
 //   const navigate = useNavigate();
 
-//   const backendUrl = "http://116.203.106.75:1337"; // Виправлено на IP-адресу сервера
+//   const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
 
 //   useEffect(() => {
 //     const fetchProduct = async () => {
@@ -84,7 +84,6 @@
 //           {product.price ? `${product.price} грн` : "Ціна не вказана"}
 //         </p>
 //         <div className={styles.addToCartSection}>
-//           {/* Приклад секції додавання до кошика */}
 //           <button className={styles.addToCartButton}>Додати до кошика</button>
 //         </div>
 //         <div
@@ -103,11 +102,9 @@
 
 // export default ProductDetail;
 
-//==============================HTTPS=================================//
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "../styles/ProductDetail.module.css";
 
 const ProductDetail = () => {
@@ -119,21 +116,26 @@ const ProductDetail = () => {
   const [specsOpen, setSpecsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(
           `${backendUrl}/api/products?filters[id][$eq]=${id}&populate=*`
         );
+        console.log("Response data:", response.data);
         const productData = response.data.data[0];
         if (productData) {
           setProduct(productData);
-          const mainImageUrl = productData.mainImage?.url
+          console.log("Product data set:", productData);
+
+          const mainImageUrl = productData.mainImage?.formats?.large?.url
+            ? `${backendUrl}${productData.mainImage.formats.large.url}`
+            : productData.mainImage?.url
             ? `${backendUrl}${productData.mainImage.url}`
             : "/placeholder.jpg";
           setSelectedImage(mainImageUrl);
+          console.log("Main image URL set:", mainImageUrl);
         } else {
           setError("Продукт не знайдено");
         }
@@ -149,7 +151,64 @@ const ProductDetail = () => {
   }, [id]);
 
   if (loading) return <p>Завантаження...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) {
+    console.error("Detailed error:", error);
+    return <p>{error}</p>;
+  }
+
+  if (!product) {
+    console.warn("Продукт відсутній після завантаження.");
+    return <p>Продукт не знайдено</p>;
+  }
+
+  const {
+    name = "Назва відсутня",
+    description = "Опис відсутній",
+    price,
+    available,
+    article = "Не вказано",
+    category,
+    sub_category,
+    specifications,
+    mainImage,
+    additionalImages = [],
+  } = product;
+
+  const categoryName = category?.name || "Категорія не вказана";
+  const subCategoryName = sub_category?.name || "Підкатегорія не вказана";
+
+  const generateCategoryPath = (category) => {
+    if (!category) return "#";
+    switch (category.toLowerCase()) {
+      case "світильники":
+        return "/lights-category";
+      case "бра":
+        return "/bra";
+      case "настінні світильники":
+        return "/wall-lights";
+      case "підвісні світильники":
+        return "/pendant-lights";
+      case 'світильники "стімпанк"':
+        return "/steampunk-lights";
+      case "свічки":
+        return "/candles-category";
+      case "меблі":
+        return "/furniture-category";
+      default:
+        console.warn("Unknown category:", category);
+        return "#";
+    }
+  };
+
+  const handleThumbnailClick = (url) => {
+    console.log("Thumbnail clicked, URL:", url);
+    setSelectedImage(url);
+  };
+
+  const toggleSpecifications = () => {
+    setSpecsOpen(!specsOpen);
+    console.log("Specifications toggled:", specsOpen);
+  };
 
   return (
     <div className={styles.productDetail}>
@@ -160,47 +219,81 @@ const ProductDetail = () => {
       </div>
 
       <div className={styles.leftColumn}>
+        <h4>
+          <Link to={generateCategoryPath(categoryName)} className={styles.link}>
+            {categoryName}
+          </Link>{" "}
+          /{" "}
+          <Link
+            to={generateCategoryPath(subCategoryName)}
+            className={styles.link}
+          >
+            {subCategoryName}
+          </Link>
+        </h4>
         <img
-          src={selectedImage}
-          alt={product.name || "Зображення продукту"}
+          src={selectedImage ? selectedImage : "/placeholder.jpg"}
+          alt={name}
           className={styles.mainImage}
         />
         <div className={styles.thumbnailContainer}>
-          {product.additionalImages?.map((image, index) => (
-            <img
-              key={index}
-              src={`${backendUrl}${image.url}`}
-              alt={`Додаткове зображення ${index + 1}`}
-              className={`${styles.thumbnail} ${
-                selectedImage === `${backendUrl}${image.url}`
-                  ? styles.selectedThumbnail
-                  : ""
-              }`}
-              onClick={() => setSelectedImage(`${backendUrl}${image.url}`)}
-            />
-          ))}
+          {additionalImages.map((image, index) => {
+            const imageUrl = image.formats?.large?.url
+              ? `${import.meta.env.VITE_BACKEND_URL}${image.formats.large.url}`
+              : `${import.meta.env.VITE_BACKEND_URL}${image.url}`;
+            return (
+              <img
+                key={index}
+                src={imageUrl}
+                alt={`Додаткове зображення ${index + 1}`}
+                className={`${styles.thumbnail} ${
+                  selectedImage === imageUrl ? styles.selectedThumbnail : ""
+                }`}
+                onClick={() => handleThumbnailClick(imageUrl)}
+              />
+            );
+          })}
         </div>
+        <p className={styles.description}>{description}</p>
       </div>
 
       <div className={styles.rightColumn}>
-        <h1 className={styles.productName}>{product.name || "Без назви"}</h1>
-        <p className={styles.description}>
-          {product.description || "Опис відсутній"}
-        </p>
-        <p className={styles.price}>
-          {product.price ? `${product.price} грн` : "Ціна не вказана"}
-        </p>
+        <div className={styles.productInfo}>
+          <h2>{name}</h2>
+          <p>Артикул: {article}</p>
+          <p className={styles.price}>
+            {price ? `${price} грн` : "Ціна не вказана"}
+          </p>
+          <p className={styles.status}>
+            {available ? "В наявності" : "Немає в наявності"}
+          </p>
+        </div>
+
         <div className={styles.addToCartSection}>
+          <input
+            type="number"
+            min="1"
+            defaultValue="1"
+            className={styles.quantitySelector}
+          />
           <button className={styles.addToCartButton}>Додати до кошика</button>
         </div>
+
         <div
-          className={`${styles.specifications} ${specsOpen ? "open" : ""}`}
-          onClick={() => setSpecsOpen(!specsOpen)}
+          className={`${styles.specifications} ${specsOpen ? styles.open : ""}`}
+          onClick={toggleSpecifications}
         >
-          Характеристики
-          <div className={styles.specificationList}>
-            {/* Список характеристик товару */}
-          </div>
+          <h3>Характеристики</h3>
+          {specsOpen && (
+            <div className={styles.specificationList}>
+              {specifications &&
+                Object.entries(specifications).map(([key, value], index) => (
+                  <p key={index}>
+                    <strong>{key}: </strong> {value}
+                  </p>
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,50 @@
+/* Основні стилі для мобільного меню */
+.mobileMenu {
+  display: none; /* Приховуємо меню за замовчуванням */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding-top: 50px;
+  background-color: #f0f0f0; /* Світло-сірий фон для світлої теми */
+  z-index: 10;
+  flex-direction: column;
+  align-items: center; /* Вирівнювання пунктів меню по центру горизонтально */
+  justify-content: flex-start; /* Вирівнювання пунктів меню вертикально зверху */
+}
+
+.mobileMenuOpen {
+  display: flex; /* Відображаємо меню, коли воно відкрите */
+}
+
+.mobileMenuNavLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Займає всю ширину для вирівнювання пунктів */
+}
+
+.mobileMenuNavLinks li {
+  width: 100%; /* Пункти займають всю ширину */
+  margin: 15px 0;
+  display: flex;
+  justify-content: center; /* Центрування пунктів меню по горизонталі */
+  margin-left: 50px;
+}
+
+.mobileMenuNavLink {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold; /* Додаємо товщину шрифту */
+  text-transform: uppercase; /* Робимо всі літери великими */
+  display: block; /* Щоб посилання займало весь рядок */
+  text-align: left; /* Вирівнювання тексту по лівому краю */
+  width: 80%; /* Ширина, щоб текст вирівнювався по лівому краю */
+}
+
+/* Стилі для темної теми */
+[data-theme="dark"] .mobileMenu {
+  background-color: #333333; /* Темно-сірий фон для темної теми */
+}

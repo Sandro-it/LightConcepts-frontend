@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome to the Store",
+  "products": "Products",
+  "home": "Home",
+  "resilience": "Resilience",
+  "contact": "Contact",
+  "shipping": "Shipping",
+  "categories": {
+    "lights": "Lights",
+    "candles": "Candles",
+    "furniture": "Furniture"
+  }
+}
