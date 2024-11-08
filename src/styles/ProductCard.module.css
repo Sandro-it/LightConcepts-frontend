@@ -46,10 +46,15 @@
 .productName {
   font-size: 16px;
   margin: 5px 0;
+  color: #081f5f;
 }
 
 .productPrice {
   font-size: 18px;
   font-weight: bold;
   color: #081f5f;
+}
+
+a {
+  text-decoration: none;
 }

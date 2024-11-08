@@ -39,3 +39,38 @@
 [data-theme="dark"] .categoryLink:hover {
   background-color: #666;
 }
+
+/* Стиль для кнопки "Повернутися на початок" */
+.scrollToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #132946;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex; /* Додаємо flex-контейнер */
+  justify-content: center; /* Вирівнюємо по горизонталі */
+  align-items: center; /* Вирівнюємо по вертикалі */
+  padding: 0; /* Відключаємо padding */
+  line-height: 20; /* Забезпечує, що лінія буде точно по центру */
+}
+
+.scrollToTop::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 12px solid white; /* Колір і товщина стрілки */
+}
+
+.scrollToTop:hover {
+  background-color: #244e86;
+}
