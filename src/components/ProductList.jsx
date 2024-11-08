@@ -57,7 +57,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL; // Використовуємо URL із змінного середовища
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(
           `${backendUrl}/api/products?populate=*`
         );
