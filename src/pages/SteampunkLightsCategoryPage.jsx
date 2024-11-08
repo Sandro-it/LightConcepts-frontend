@@ -14,7 +14,7 @@ const SteampunkLightsCategoryPage = () => {
       try {
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(
-          `${backendUrl}/api/products?filters[sub_category][name][$eq]=Світильники Стімпанк&populate=*`
+          `${backendUrl}/api/products?filters[sub_category][name][$eq]=Світильники "Стімпанк"&populate=*`
         );
         setProducts(response.data.data);
         setLoading(false);
