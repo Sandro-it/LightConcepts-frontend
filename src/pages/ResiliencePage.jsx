@@ -15,7 +15,7 @@ const ResiliencePage = () => {
       try {
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(
-          `${backendUrl}/api/products?filters[sub_category][name][$eq]=Незламність&populate=*`
+          `${backendUrl}/api/products?filters[category][name][$eq]=Ліхтар&filters[sub_category][name][$eq]="Незламність"&populate=*`
         );
         if (response.data.data.length > 0) {
           setProduct(response.data.data[0]);
