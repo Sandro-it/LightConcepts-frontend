@@ -8,29 +8,19 @@
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 
+//   const backendUrl = "https://api.svitli.com.ua"; // Виправлено на HTTPS
+
 //   useEffect(() => {
 //     const fetchProducts = async () => {
 //       try {
-//         const backendUrl = import.meta.env.VITE_BACKEND_URL; // Використовуємо URL із змінного середовища
 //         const response = await axios.get(
-//           `${backendUrl}/api/products?populate=*`
+//           '${backendUrl}/api/products?populate=*'
 //         );
-
-//         // Перевірка структури відповіді
-//         if (response.data && response.data.data) {
-//           console.log("Отримані продукти зі Strapi:", response.data.data);
-//           setProducts(response.data.data);
-//         } else {
-//           console.error(
-//             "Некоректна структура відповіді від API:",
-//             response.data
-//           );
-//           setError("Некоректна відповідь від сервера");
-//         }
+//         setProducts(response.data.data);
+//         setLoading(false);
 //       } catch (error) {
 //         console.error("Помилка завантаження продуктів:", error);
 //         setError("Не вдалося завантажити товари");
-//       } finally {
 //         setLoading(false);
 //       }
 //     };
@@ -40,13 +30,6 @@
 
 //   if (loading) return <p>Завантаження...</p>;
 //   if (error) return <p>{error}</p>;
-
-//   // Перевірка наявності продуктів перед рендерингом
-//   if (!products || products.length === 0) {
-//     return <p>Товари не знайдені або їх немає в наявності.</p>;
-//   }
-
-//   console.log("Products list для відображення:", products);
 
 //   return (
 //     <div className={styles.productList}>
@@ -71,19 +54,29 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL; // Виправлено на HTTPS
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        const backendUrl = import.meta.env.VITE_BACKEND_URL; // Використовуємо URL із змінного середовища
         const response = await axios.get(
           `${backendUrl}/api/products?populate=*`
         );
-        setProducts(response.data.data);
-        setLoading(false);
+
+        // Перевірка структури відповіді
+        if (response.data && response.data.data) {
+          console.log("Отримані продукти зі Strapi:", response.data.data);
+          setProducts(response.data.data);
+        } else {
+          console.error(
+            "Некоректна структура відповіді від API:",
+            response.data
+          );
+          setError("Некоректна відповідь від сервера");
+        }
       } catch (error) {
         console.error("Помилка завантаження продуктів:", error);
         setError("Не вдалося завантажити товари");
+      } finally {
         setLoading(false);
       }
     };
@@ -93,6 +86,13 @@ const ProductList = () => {
 
   if (loading) return <p>Завантаження...</p>;
   if (error) return <p>{error}</p>;
+
+  // Перевірка наявності продуктів перед рендерингом
+  if (!products || products.length === 0) {
+    return <p>Товари не знайдені або їх немає в наявності.</p>;
+  }
+
+  console.log("Products list для відображення:", products);
 
   return (
     <div className={styles.productList}>
