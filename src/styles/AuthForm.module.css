@@ -1,0 +1,95 @@
+.authFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Напівпрозорий фон */
+  z-index: 10000;
+}
+
+.authForm {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  z-index: 10000;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-color); /* Текст, який точно видно */
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid; /* Видимий контур */
+  border-color: black;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: var(--text-color); /* Колір тексту всередині інпуту */
+  background-color: var(--background-color); /* Залишаємо адаптивність */
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--focus-color, #007bff); /* Контур при фокусі */
+  box-shadow: 0 0 5px var(--focus-color, #007bff); /* Ефект підсвічування */
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--button-color, #007bff); /* Основний колір кнопки */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitButton:hover {
+  background-color: var(--button-hover-color, #0056b3); /* Трохи темніший */
+}
+
+.submitButton:focus {
+  outline: none;
+  border: 2px solid var(--focus-color, #0056b3); /* Фокус для кнопки */
+  box-shadow: 0 0 5px var(--focus-color, #0056b3);
+}
+
+.submitButton:disabled {
+  background-color: var(--disabled-button-color, #d6d6d6);
+  cursor: not-allowed;
+  opacity: 0.6;
+}

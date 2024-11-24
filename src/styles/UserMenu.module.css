@@ -1,0 +1,53 @@
+.userMenu {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 15px;
+  position: absolute;
+  /* top: 100%; Розташування безпосередньо під іконкою */
+  right: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px; /* Додаємо закруглені кути для приємнішого вигляду */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Легка тінь для ефекту */
+  z-index: 1000; /* Достатній пріоритет для перекриття інших елементів */
+  /* min-width: 200px; Мінімальна ширина для чіткості */
+}
+
+.userMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.userMenu li {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.userMenu li:hover {
+  background-color: var(--hover-color); /* Додаємо ефект при наведенні */
+}
+
+.authFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Напівпрозорий фон */
+  z-index: 1000;
+}
+
+.authForm {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%; /* Забезпечує адаптивність */
+  position: relative;
+}
