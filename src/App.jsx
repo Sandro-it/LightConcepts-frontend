@@ -54,6 +54,7 @@ import FurnitureCategoryPage from "./pages/FurnitureCategoryPage";
 import WallLightsCategoryPage from "./pages/WallLightsCategoryPage";
 import PendantLightsCategoryPage from "./pages/PendantLightsCategoryPage";
 import SteampunkLightsCategoryPage from "./pages/SteampunkLightsCategoryPage";
+import UserAccount from "./pages/UserAccount"; // Імпорт сторінки
 import { useTranslation } from "react-i18next"; // Імпортуємо useTranslation з react-i18next
 import "./App.css"; // Імпортуємо CSS файл зі стилями для App
 
@@ -89,6 +90,7 @@ const App = () => {
             path="/furniture-category"
             element={<FurnitureCategoryPage />}
           />
+          <Route path="/account" element={<UserAccount />} />
         </Routes>
       </main>
       <Footer /> {/* Додаємо Footer компонент внизу */}

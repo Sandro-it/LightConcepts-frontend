@@ -443,7 +443,12 @@ const Header = () => {
                     <div onClick={toggleUserMenu}>
                       <FaUser />
                     </div>
-                    {isUserMenuOpen && <UserMenu onLogout={handleLogout} />}
+                    {isUserMenuOpen && (
+                      <UserMenu
+                        onLogout={handleLogout}
+                        onClose={() => setUserMenuOpen(false)}
+                      />
+                    )}
                   </>
                 ) : (
                   <div onClick={() => toggleAuthForm("login")}>
