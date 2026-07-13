@@ -4,13 +4,8 @@ import Footer from "./components/Footer"; // Імпортуємо Footer ком�
 import ResiliencePage from "./pages/ResiliencePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail"; // Імпортуємо сторінку деталей товару
-import LightsCategoryPage from "./pages/LightsCategoryPage";
-import BraCategoryPage from "./pages/BraCategoryPage";
-import CandlesCategoryPage from "./pages/CandlesCategoryPage";
-import FurnitureCategoryPage from "./pages/FurnitureCategoryPage";
-import WallLightsCategoryPage from "./pages/WallLightsCategoryPage";
-import PendantLightsCategoryPage from "./pages/PendantLightsCategoryPage";
-import SteampunkLightsCategoryPage from "./pages/SteampunkLightsCategoryPage";
+import CategoryPage from "./pages/CategoryPage";
+import { categories } from "./config/categories";
 import UserAccount from "./pages/UserAccount"; // Імпорт сторінки
 import { useTranslation } from "react-i18next"; // Імпортуємо useTranslation з react-i18next
 import "./App.css"; // Імпортуємо CSS файл зі стилями для App
@@ -31,22 +26,13 @@ const App = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetail />} />{" "}
           {/* Роут для сторінки деталей товару */}
-          <Route path="/lights-category" element={<LightsCategoryPage />} />
-          <Route path="/bra" element={<BraCategoryPage />} />
-          <Route path="/wall-lights" element={<WallLightsCategoryPage />} />
-          <Route
-            path="/pendant-lights"
-            element={<PendantLightsCategoryPage />}
-          />
-          <Route
-            path="/steampunk-lights"
-            element={<SteampunkLightsCategoryPage />}
-          />
-          <Route path="/candles-category" element={<CandlesCategoryPage />} />
-          <Route
-            path="/furniture-category"
-            element={<FurnitureCategoryPage />}
-          />
+          {Object.values(categories).map((config) => (
+            <Route
+              key={config.path}
+              path={config.path}
+              element={<CategoryPage config={config} />}
+            />
+          ))}
           <Route path="/account" element={<UserAccount />} />
         </Routes>
       </main>
