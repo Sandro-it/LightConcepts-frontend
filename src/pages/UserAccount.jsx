@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import styles from "../styles/UserAccount.module.css";
 import {
   changePassword,
+  getCurrentUser,
   updateUser,
   uploadAvatar,
 } from "../services/authService";
-import axios from "axios";
 
 const UserAccount = () => {
   const [userData, setUserData] = useState({
@@ -27,14 +27,8 @@ const UserAccount = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      axios
-        .get("https://api.svitli.com.ua/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          const data = response.data;
+      getCurrentUser()
+        .then((data) => {
           setUserData({
             username: data.username || "",
             email: data.email || "",

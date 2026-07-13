@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../services/apiClient";
 import styles from "../styles/ProductList.module.css";
 import ProductCard from "./ProductCard";
 
@@ -11,10 +11,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/products?populate=*`
-        );
+        const response = await apiClient.get("/products?populate=*");
 
         // Перевірка структури відповіді
         if (response.data && response.data.data) {

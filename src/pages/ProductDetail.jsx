@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient, { BACKEND_URL } from "../services/apiClient";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "../styles/ProductDetail.module.css";
 
@@ -15,9 +15,8 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/products?filters[id][$eq]=${id}&populate=*`
+        const response = await apiClient.get(
+          `/products?filters[id][$eq]=${id}&populate=*`
         );
         console.log("Response data:", response.data);
         const productData = response.data.data[0];
@@ -26,9 +25,9 @@ const ProductDetail = () => {
           console.log("Product data set:", productData);
 
           const mainImageUrl = productData.mainImage?.formats?.large?.url
-            ? `${backendUrl}${productData.mainImage.formats.large.url}`
+            ? `${BACKEND_URL}${productData.mainImage.formats.large.url}`
             : productData.mainImage?.url
-            ? `${backendUrl}${productData.mainImage.url}`
+            ? `${BACKEND_URL}${productData.mainImage.url}`
             : "/placeholder.jpg";
           setSelectedImage(mainImageUrl);
           console.log("Main image URL set:", mainImageUrl);
@@ -137,8 +136,8 @@ const ProductDetail = () => {
         <div className={styles.thumbnailContainer}>
           {additionalImages.map((image, index) => {
             const imageUrl = image.formats?.large?.url
-              ? `${import.meta.env.VITE_BACKEND_URL}${image.formats.large.url}`
-              : `${import.meta.env.VITE_BACKEND_URL}${image.url}`;
+              ? `${BACKEND_URL}${image.formats.large.url}`
+              : `${BACKEND_URL}${image.url}`;
             return (
               <img
                 key={index}

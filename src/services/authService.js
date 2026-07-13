@@ -1,47 +1,9 @@
-import axios from "axios";
-
-// Базові URL
-const AUTH_API_URL = "https://api.svitli.com.ua/api/auth";
-const API_BASE_URL = "https://api.svitli.com.ua/api"; // Загальний базовий URL
-
-// Інстанси Axios
-const axiosInstance = axios.create({
-  baseURL: AUTH_API_URL,
-});
-
-const apiInstance = axios.create({
-  baseURL: API_BASE_URL,
-});
-
-// Інтерцептор для додавання токена
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    config.headers.Accept = "application/json"; // Заголовок для CORS
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-apiInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    config.headers.Accept = "application/json";
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+import apiClient from "./apiClient";
 
 // Авторизація
 export const login = async (email, password) => {
   try {
-    const response = await axiosInstance.post("/local", {
+    const response = await apiClient.post("/auth/local", {
       identifier: email,
       password,
     });
@@ -55,7 +17,7 @@ export const login = async (email, password) => {
 // Реєстрація
 export const register = async (username, email, password) => {
   try {
-    const response = await axiosInstance.post("/local/register", {
+    const response = await apiClient.post("/auth/local/register", {
       username,
       email,
       password,
@@ -67,10 +29,20 @@ export const register = async (username, email, password) => {
   }
 };
 
+// Поточний користувач
+export const getCurrentUser = async () => {
+  try {
+    const response = await apiClient.get("/users/me");
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
 // Зміна пароля
 export const changePassword = async (currentPassword, newPassword) => {
   try {
-    const response = await apiInstance.post("/auth/change-password", {
+    const response = await apiClient.post("/auth/change-password", {
       currentPassword,
       password: newPassword,
     });
@@ -83,7 +55,7 @@ export const changePassword = async (currentPassword, newPassword) => {
 // Оновлення користувача
 export const updateUser = async (userData) => {
   try {
-    const response = await apiInstance.put("/users/me", {
+    const response = await apiClient.put("/users/me", {
       data: userData, // Додаємо дані у форматі "data"
     });
     return response.data;
@@ -97,7 +69,7 @@ export const uploadAvatar = async (file) => {
   try {
     const formData = new FormData();
     formData.append("files", file);
-    const response = await apiInstance.post("/upload", formData);
+    const response = await apiClient.post("/upload", formData);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
