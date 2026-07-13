@@ -45,6 +45,7 @@ export const changePassword = async (currentPassword, newPassword) => {
     const response = await apiClient.post("/auth/change-password", {
       currentPassword,
       password: newPassword,
+      passwordConfirmation: newPassword, // Strapi users-permissions вимагає це поле
     });
     return response.data;
   } catch (error) {
@@ -55,9 +56,9 @@ export const changePassword = async (currentPassword, newPassword) => {
 // Оновлення користувача
 export const updateUser = async (userData) => {
   try {
-    const response = await apiClient.put("/users/me", {
-      data: userData, // Додаємо дані у форматі "data"
-    });
+    // /users/me — ендпоінт users-permissions, без обгортки { data } (на
+    // відміну від звичайних content-types Strapi v4/v5)
+    const response = await apiClient.put("/users/me", userData);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
