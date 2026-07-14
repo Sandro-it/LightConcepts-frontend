@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
+import { BACKEND_URL } from "../services/apiClient";
 import styles from "../styles/ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  console.log("Product data received in ProductCard:", product);
-
-  // Оновлений шлях до зображення з використанням VITE_BACKEND_URL
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const imageUrl = product?.mainImage?.url
-    ? `${backendUrl}${product.mainImage.url}`
+    ? `${BACKEND_URL}${product.mainImage.url}`
     : "/placeholder.jpg";
 
   return (

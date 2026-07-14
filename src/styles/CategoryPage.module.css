@@ -1,5 +1,4 @@
-/* src/styles/LightsCategoryPage.module.css */
-.lightsCategoryPage {
+.categoryPage {
   padding: 20px;
 }
 
@@ -9,7 +8,7 @@
   gap: 20px;
 }
 
-/* Стилі для кнопок-посилань підкатегорій */
+/* Стилі для кнопок-посилань підкатегорій (сторінка "Світильники") */
 .subCategoryLinks {
   display: flex;
   gap: 10px;
@@ -53,14 +52,29 @@
   transition: background-color 0.3s;
 }
 
-.backButton:hover {
+/* Варіант "sub" — сторінки підкатегорій Світильників (Бра, Настінні,
+   Підвісні, Стімпанк), hover узгоджений з .subCategoryLink вище */
+.backButtonSub:hover {
+  background-color: #025aa5;
+}
+
+[data-theme="dark"] .backButtonSub {
+  background-color: #444;
+}
+
+[data-theme="dark"] .backButtonSub:hover {
+  background-color: #666;
+}
+
+/* Варіант "top" — категорії верхнього рівня (Світильники, Свічки, Меблі) */
+.backButtonTop:hover {
   background-color: #5a6268;
 }
 
-[data-theme="dark"] .backButton {
+[data-theme="dark"] .backButtonTop {
   background-color: #333;
 }
 
-[data-theme="dark"] .backButton:hover {
+[data-theme="dark"] .backButtonTop:hover {
   background-color: #555;
 }

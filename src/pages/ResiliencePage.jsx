@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient, { BACKEND_URL } from "../services/apiClient";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard"; // Імпорт компонента картки товару
 import styles from "../styles/ResiliencePage.module.css";
@@ -13,9 +13,8 @@ const ResiliencePage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/products?filters[category][name][$eq]=Ліхтар&filters[sub_category][name][$eq]="Незламність"&populate=*`
+        const response = await apiClient.get(
+          `/products?filters[category][name][$eq]=Ліхтар&filters[sub_category][name][$eq]="Незламність"&populate=*`
         );
         if (response.data.data.length > 0) {
           setProduct(response.data.data[0]);
@@ -31,9 +30,8 @@ const ResiliencePage = () => {
   useEffect(() => {
     const fetchResilienceVideo = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/resiliences?filters[name][$eq]=Відеоогляд&populate=*`
+        const response = await apiClient.get(
+          `/resiliences?filters[name][$eq]=Відеоогляд&populate=*`
         );
         if (response.data.data.length > 0) {
           setResilienceVideo(response.data.data[0].resilienceVideo.url);
@@ -49,9 +47,8 @@ const ResiliencePage = () => {
   useEffect(() => {
     const fetchFirstPhoto = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/resiliences?filters[name][$eq]=Військові&populate=*`
+        const response = await apiClient.get(
+          `/resiliences?filters[name][$eq]=Військові&populate=*`
         );
         if (response.data.data.length > 0) {
           setFirstPhoto(response.data.data[0].resiliencePhoto.url);
@@ -67,9 +64,8 @@ const ResiliencePage = () => {
   useEffect(() => {
     const fetchSecondPhoto = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(
-          `${backendUrl}/api/resiliences?filters[name][$eq]=QRCode&populate=*`
+        const response = await apiClient.get(
+          `/resiliences?filters[name][$eq]=QRCode&populate=*`
         );
         if (response.data.data.length > 0) {
           setSecondPhoto(response.data.data[0].resiliencePhoto2.url);
@@ -88,7 +84,7 @@ const ResiliencePage = () => {
         <div className={styles.videoContainer}>
           {resilienceVideo && (
             <video
-              src={`${import.meta.env.VITE_BACKEND_URL}${resilienceVideo}`}
+              src={`${BACKEND_URL}${resilienceVideo}`}
               controls
               className={styles.video}
             ></video>
@@ -143,14 +139,14 @@ const ResiliencePage = () => {
         <div className={styles.photoContainer}>
           {firstPhoto && (
             <img
-              src={`${import.meta.env.VITE_BACKEND_URL}${firstPhoto}`}
+              src={`${BACKEND_URL}${firstPhoto}`}
               alt="Перше фото"
               className={styles.photo}
             />
           )}
           {secondPhoto && (
             <img
-              src={`${import.meta.env.VITE_BACKEND_URL}${secondPhoto}`}
+              src={`${BACKEND_URL}${secondPhoto}`}
               alt="Друге фото"
               className={styles.photo}
             />

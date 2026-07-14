@@ -1,100 +1,83 @@
-import axios from "axios";
+import apiClient from "./apiClient";
 
-const AUTH_API_URL = "https://api.svitli.com.ua/api/auth"; // URL до вашого API авторизації
-
-// 1. Налаштування базового інстансу axios
-const axiosInstance = axios.create({
-  baseURL: AUTH_API_URL,
-});
-
-// 2. Додавання токена до заголовків запитів
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token"); // Отримуємо токен із localStorage
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-      console.log("Додаємо токен до заголовків:", config.headers.Authorization);
-    }
-    return config;
-  },
-  (error) => {
-    console.error("Помилка в запиті Axios:", error);
-    return Promise.reject(error);
-  }
-);
-
-// 3. Запити для авторизації
+// Авторизація
 export const login = async (email, password) => {
   try {
-    console.log("Відправляємо запит на авторизацію:", {
+    const response = await apiClient.post("/auth/local", {
       identifier: email,
-      password: password,
+      password,
     });
-    const response = await axiosInstance.post("/local", {
-      identifier: email,
-      password: password,
-    });
-    console.log("Успішний логін, відповідь сервера:", response.data);
-
-    // Зберігаємо токен після успішного входу
     localStorage.setItem("token", response.data.jwt);
-    console.log("Токен збережено в localStorage:", response.data.jwt);
-
     return response.data;
   } catch (error) {
-    console.error(
-      "Помилка авторизації:",
-      error.response ? error.response.data : error
-    );
-    throw error;
+    throw error.response ? error.response.data : error;
   }
 };
 
+// Реєстрація
 export const register = async (username, email, password) => {
   try {
-    console.log("Відправляємо запит на реєстрацію:", {
-      username: username,
-      email: email,
-      password: password,
+    const response = await apiClient.post("/auth/local/register", {
+      username,
+      email,
+      password,
     });
-    const response = await axiosInstance.post("/local/register", {
-      username: username,
-      email: email,
-      password: password,
-    });
-    console.log("Успішна реєстрація, відповідь сервера:", response.data);
-
-    // Зберігаємо токен після успішної реєстрації
     localStorage.setItem("token", response.data.jwt);
-    console.log("Токен збережено в localStorage:", response.data.jwt);
-
     return response.data;
   } catch (error) {
-    console.error(
-      "Помилка реєстрації:",
-      error.response ? error.response.data : error
-    );
-    throw error;
+    throw error.response ? error.response.data : error;
   }
 };
 
-export const checkAuthStatus = async () => {
+// Поточний користувач
+export const getCurrentUser = async () => {
   try {
-    console.log("Перевіряємо статус авторизації...");
-    const response = await axiosInstance.get("/status");
-    console.log("Статус авторизації отримано:", response.data);
+    const response = await apiClient.get("/users/me");
     return response.data;
   } catch (error) {
-    console.error(
-      "Помилка перевірки статусу авторизації:",
-      error.response ? error.response.data : error
-    );
-    return null;
+    throw error.response ? error.response.data : error;
   }
 };
 
-// 4. Логаут
+// Зміна пароля
+export const changePassword = async (currentPassword, newPassword) => {
+  try {
+    const response = await apiClient.post("/auth/change-password", {
+      currentPassword,
+      password: newPassword,
+      passwordConfirmation: newPassword, // Strapi users-permissions вимагає це поле
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+// Оновлення користувача
+export const updateUser = async (userData) => {
+  try {
+    // /users/me — ендпоінт users-permissions, без обгортки { data } (на
+    // відміну від звичайних content-types Strapi v4/v5)
+    const response = await apiClient.put("/users/me", userData);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+// Завантаження аватара
+export const uploadAvatar = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("files", file);
+    const response = await apiClient.post("/upload", formData);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+// Вихід із системи
 export const logout = () => {
-  console.log("Вихід із системи, видалення токена...");
-  localStorage.removeItem("token"); // Видаляємо токен
+  localStorage.removeItem("token");
 };
