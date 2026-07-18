@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import apiClient, { BACKEND_URL } from "../services/apiClient";
+import apiClient from "../services/apiClient";
+import { getImageUrl } from "../utils/getImageUrl";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard"; // Імпорт компонента картки товару
 import styles from "../styles/ResiliencePage.module.css";
@@ -84,7 +85,7 @@ const ResiliencePage = () => {
         <div className={styles.videoContainer}>
           {resilienceVideo && (
             <video
-              src={`${BACKEND_URL}${resilienceVideo}`}
+              src={getImageUrl(resilienceVideo)}
               controls
               className={styles.video}
             ></video>
@@ -139,14 +140,14 @@ const ResiliencePage = () => {
         <div className={styles.photoContainer}>
           {firstPhoto && (
             <img
-              src={`${BACKEND_URL}${firstPhoto}`}
+              src={getImageUrl(firstPhoto)}
               alt="Перше фото"
               className={styles.photo}
             />
           )}
           {secondPhoto && (
             <img
-              src={`${BACKEND_URL}${secondPhoto}`}
+              src={getImageUrl(secondPhoto)}
               alt="Друге фото"
               className={styles.photo}
             />

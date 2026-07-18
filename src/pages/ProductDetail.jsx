@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import apiClient, { BACKEND_URL } from "../services/apiClient";
+import apiClient from "../services/apiClient";
+import { getImageUrl } from "../utils/getImageUrl";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "../styles/ProductDetail.module.css";
 
@@ -24,11 +25,10 @@ const ProductDetail = () => {
           setProduct(productData);
           console.log("Product data set:", productData);
 
-          const mainImageUrl = productData.mainImage?.formats?.large?.url
-            ? `${BACKEND_URL}${productData.mainImage.formats.large.url}`
-            : productData.mainImage?.url
-            ? `${BACKEND_URL}${productData.mainImage.url}`
-            : "/placeholder.jpg";
+          const mainImageUrl = getImageUrl(
+            productData.mainImage?.formats?.large?.url ||
+              productData.mainImage?.url
+          );
           setSelectedImage(mainImageUrl);
           console.log("Main image URL set:", mainImageUrl);
         } else {
@@ -135,9 +135,9 @@ const ProductDetail = () => {
         />
         <div className={styles.thumbnailContainer}>
           {additionalImages.map((image, index) => {
-            const imageUrl = image.formats?.large?.url
-              ? `${BACKEND_URL}${image.formats.large.url}`
-              : `${BACKEND_URL}${image.url}`;
+            const imageUrl = getImageUrl(
+              image.formats?.large?.url || image.url
+            );
             return (
               <img
                 key={index}

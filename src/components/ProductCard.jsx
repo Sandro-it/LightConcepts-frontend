@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import { BACKEND_URL } from "../services/apiClient";
+import { getImageUrl } from "../utils/getImageUrl";
 import styles from "../styles/ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  const imageUrl = product?.mainImage?.url
-    ? `${BACKEND_URL}${product.mainImage.url}`
-    : "/placeholder.jpg";
+  const imageUrl = getImageUrl(product?.mainImage?.url);
 
   return (
     <Link to={`/products/${product.id}`} className={styles.productLink}>
