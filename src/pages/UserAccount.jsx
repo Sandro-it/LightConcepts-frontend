@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "../styles/UserAccount.module.css";
 import {
   changePassword,
@@ -22,7 +22,8 @@ const UserAccount = () => {
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
-  const [passwordChanged, setPasswordChanged] = useState(false);
+  const [passwordFormOpen, setPasswordFormOpen] = useState(false);
+  const passwordSectionRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,6 +41,28 @@ const UserAccount = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (!passwordFormOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (
+        passwordSectionRef.current &&
+        !passwordSectionRef.current.contains(e.target)
+      ) {
+        setPasswordFormOpen(false);
+        setPasswords({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setErrors({});
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [passwordFormOpen]);
 
   const handleUserDataChange = (e) => {
     const { name, value } = e.target;
@@ -79,27 +102,21 @@ const UserAccount = () => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
     if (validatePasswords()) {
       try {
         await changePassword(passwords.currentPassword, passwords.newPassword);
-        setMessage("Пароль успішно змінено!");
         setPasswords({
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
         });
         setErrors({});
-        setPasswordChanged(true);
+        setPasswordFormOpen(false);
+        setMessage("Пароль успішно змінено!");
       } catch (error) {
-        setMessage("Помилка зміни пароля.");
+        setErrors({ submit: "Помилка зміни пароля. Перевірте поточний пароль." });
       }
     }
-  };
-
-  const handleChangePasswordAgain = () => {
-    setPasswordChanged(false);
-    setMessage("");
   };
 
   const handleUploadAvatar = async () => {
@@ -157,60 +174,77 @@ const UserAccount = () => {
           />
         </div>
         <button type="submit">Оновити дані</button>
+        {message && <p className={styles.message}>{message}</p>}
       </form>
 
-      {passwordChanged ? (
-        <div className={styles.formGroup}>
-          <p className={styles.message}>{message}</p>
-          <button type="button" onClick={handleChangePasswordAgain}>
-            Змінити пароль ще раз
+      <div className={styles.formGroup} ref={passwordSectionRef}>
+        {!passwordFormOpen ? (
+          <button type="button" onClick={() => setPasswordFormOpen(true)}>
+            Змінити пароль
           </button>
-        </div>
-      ) : (
-        <form onSubmit={handlePasswordSubmit}>
-          <div className={styles.formGroup}>
-            <label htmlFor="currentPassword">Поточний пароль</label>
-            <input
-              type="password"
-              id="currentPassword"
-              name="currentPassword"
-              value={passwords.currentPassword}
-              onChange={handlePasswordChange}
-            />
-            {errors.currentPassword && (
-              <span className={styles.error}>{errors.currentPassword}</span>
+        ) : (
+          <form onSubmit={handlePasswordSubmit}>
+            <div className={styles.formGroup}>
+              <label htmlFor="currentPassword">Поточний пароль</label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                autoFocus
+                value={passwords.currentPassword}
+                onChange={handlePasswordChange}
+              />
+              {errors.currentPassword && (
+                <span className={styles.error}>{errors.currentPassword}</span>
+              )}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="newPassword">Новий пароль</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                value={passwords.newPassword}
+                onChange={handlePasswordChange}
+              />
+              {errors.newPassword && (
+                <span className={styles.error}>{errors.newPassword}</span>
+              )}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="confirmPassword">Підтвердьте новий пароль</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={passwords.confirmPassword}
+                onChange={handlePasswordChange}
+              />
+              {errors.confirmPassword && (
+                <span className={styles.error}>{errors.confirmPassword}</span>
+              )}
+            </div>
+            {errors.submit && (
+              <span className={styles.error}>{errors.submit}</span>
             )}
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="newPassword">Новий пароль</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              value={passwords.newPassword}
-              onChange={handlePasswordChange}
-            />
-            {errors.newPassword && (
-              <span className={styles.error}>{errors.newPassword}</span>
-            )}
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword">Підтвердьте новий пароль</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={passwords.confirmPassword}
-              onChange={handlePasswordChange}
-            />
-            {errors.confirmPassword && (
-              <span className={styles.error}>{errors.confirmPassword}</span>
-            )}
-          </div>
-          <button type="submit">Змінити пароль</button>
-          {message && <p className={styles.message}>{message}</p>}
-        </form>
-      )}
+            <button type="submit">Змінити пароль</button>
+            <button
+              type="button"
+              onClick={() => {
+                setPasswordFormOpen(false);
+                setPasswords({
+                  currentPassword: "",
+                  newPassword: "",
+                  confirmPassword: "",
+                });
+                setErrors({});
+              }}
+            >
+              Скасувати
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };
