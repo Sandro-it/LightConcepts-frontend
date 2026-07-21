@@ -91,8 +91,7 @@ const AccountModal = ({ onClose }) => {
         });
         setErrors({});
         setPasswordFormOpen(false);
-        // Успішна зміна пароля закриває все вікно облікового запису
-        onClose();
+        setMessage("Пароль успішно змінено!");
       } catch (error) {
         setErrors({ submit: "Помилка зміни пароля. Перевірте поточний пароль." });
       }
@@ -129,7 +128,6 @@ const AccountModal = ({ onClose }) => {
     }
   };
 
-  // Клік по підкладці (поза панеллю) закриває все вікно
   const handleBackdropMouseDown = (e) => {
     setMouseDownOnBackdrop(e.target === e.currentTarget);
   };

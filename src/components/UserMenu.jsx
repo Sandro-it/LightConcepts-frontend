@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/UserMenu.module.css";
 import { logout } from "../services/authService";
 
-const UserMenu = ({ onLogout, onClose, onOpenAccount }) => {
+const UserMenu = ({ username, onLogout, onClose, onOpenAccount }) => {
   const handleLogout = () => {
     logout();
     onLogout();
@@ -21,6 +21,9 @@ const UserMenu = ({ onLogout, onClose, onOpenAccount }) => {
 
   return (
     <div className={styles.userMenu}>
+      {username && (
+        <div className={styles.userMenuGreeting}>Вітаємо, {username}!</div>
+      )}
       <ul>
         <li>
           <Link to="/orders" onClick={handleMenuItemClick}>
@@ -49,6 +52,7 @@ const UserMenu = ({ onLogout, onClose, onOpenAccount }) => {
 };
 
 UserMenu.propTypes = {
+  username: PropTypes.string,
   onLogout: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpenAccount: PropTypes.func.isRequired,

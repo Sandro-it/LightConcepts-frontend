@@ -9,7 +9,7 @@ import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import AuthForm from "./AuthForm";
 import AccountModal from "./AccountModal";
-import { logout } from "../services/authService";
+import { logout, getCurrentUser } from "../services/authService";
 import styles from "../styles/Header.module.css";
 
 const Header = () => {
@@ -20,12 +20,23 @@ const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const [isAccountModalVisible, setAccountModalVisible] = useState(false);
+  const [username, setUsername] = useState("");
   const userIconRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCurrentUser()
+        .then((data) => setUsername(data.username || ""))
+        .catch(() => setUsername(""));
+    } else {
+      setUsername("");
+    }
+  }, [isAuthenticated]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -60,6 +71,11 @@ const Header = () => {
 
   const closeAccountModal = () => {
     setAccountModalVisible(false);
+    if (isAuthenticated) {
+      getCurrentUser()
+        .then((data) => setUsername(data.username || ""))
+        .catch(() => {});
+    }
   };
 
   const handleOutsideClick = (e) => {
@@ -108,11 +124,16 @@ const Header = () => {
               >
                 {isAuthenticated ? (
                   <>
-                    <div onClick={toggleUserMenu}>
+                    <div
+                      onClick={toggleUserMenu}
+                      title={username || undefined}
+                      style={{ cursor: "pointer" }}
+                    >
                       <FaUser />
                     </div>
                     {isUserMenuOpen && (
                       <UserMenu
+                        username={username}
                         onLogout={handleLogout}
                         onClose={() => setUserMenuOpen(false)}
                         onOpenAccount={openAccountModal}
