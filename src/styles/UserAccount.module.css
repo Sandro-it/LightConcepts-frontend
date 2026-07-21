@@ -2,30 +2,31 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-color);
   text-align: center;
 }
 
 .userInfo {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #f9f9f9;
-  border: 1px solid #eaeaea;
+  background-color: var(--hover-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
 }
 
 .userInfo p {
   margin: 10px 0;
   font-size: 1rem;
-  color: #555;
+  color: var(--text-color);
 }
 
 .formGroup {
@@ -35,7 +36,7 @@ h1 {
 label {
   display: block;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 5px;
 }
 
@@ -43,7 +44,9 @@ input {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
@@ -96,7 +99,7 @@ button:hover {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
-  border: 2px solid #ccc;
+  border: 2px solid var(--border-color);
 }
 
 .avatarButton {
