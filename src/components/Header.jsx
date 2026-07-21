@@ -8,6 +8,7 @@ import MainMenu from "./MainMenu";
 import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import AuthForm from "./AuthForm";
+import AccountModal from "./AccountModal";
 import { logout } from "../services/authService";
 import styles from "../styles/Header.module.css";
 
@@ -18,12 +19,12 @@ const Header = () => {
   const [authMode, setAuthMode] = useState("login");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
+  const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const userIconRef = useRef(null);
 
   useEffect(() => {
-    // Перевірка токена в localStorage
     const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); // Якщо токен є, вважаємо, що користувач авторизований
+    setIsAuthenticated(!!token);
   }, []);
 
   const toggleMenu = () => {
@@ -44,13 +45,21 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Видалення токена
-    setIsAuthenticated(false); // Скидання стану
-    setUserMenuOpen(false); // Закрити меню користувача
+    logout();
+    setIsAuthenticated(false);
+    setUserMenuOpen(false);
   };
 
   const toggleUserMenu = () => {
     setUserMenuOpen((prev) => !prev);
+  };
+
+  const openAccountModal = () => {
+    setAccountModalVisible(true);
+  };
+
+  const closeAccountModal = () => {
+    setAccountModalVisible(false);
   };
 
   const handleOutsideClick = (e) => {
@@ -106,6 +115,7 @@ const Header = () => {
                       <UserMenu
                         onLogout={handleLogout}
                         onClose={() => setUserMenuOpen(false)}
+                        onOpenAccount={openAccountModal}
                       />
                     )}
                   </>
@@ -129,6 +139,9 @@ const Header = () => {
           onClose={closeAuthForm}
           onLoginSuccess={() => setIsAuthenticated(true)}
         />
+      )}
+      {isAccountModalVisible && (
+        <AccountModal onClose={closeAccountModal} />
       )}
     </header>
   );

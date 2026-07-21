@@ -6,7 +6,6 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail"; // Імпортуємо сторінку деталей товару
 import CategoryPage from "./pages/CategoryPage";
 import { categories } from "./config/categories";
-import UserAccount from "./pages/UserAccount"; // Імпорт сторінки
 import { useTranslation } from "react-i18next"; // Імпортуємо useTranslation з react-i18next
 import "./App.css"; // Імпортуємо CSS файл зі стилями для App
 
@@ -33,7 +32,6 @@ const App = () => {
               element={<CategoryPage config={config} />}
             />
           ))}
-          <Route path="/account" element={<UserAccount />} />
         </Routes>
       </main>
       <Footer /> {/* Додаємо Footer компонент внизу */}

@@ -1,17 +1,22 @@
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import styles from "../styles/UserMenu.module.css";
 import { logout } from "../services/authService";
 
-const UserMenu = ({ onLogout, onClose }) => {
+const UserMenu = ({ onLogout, onClose, onOpenAccount }) => {
   const handleLogout = () => {
-    logout(); // Видаляє токен
-    onLogout(); // Оновлює стан
-    if (onClose) onClose(); // Закриває меню
+    logout();
+    onLogout();
+    if (onClose) onClose();
   };
 
   const handleMenuItemClick = () => {
-    if (onClose) onClose(); // Закриває меню
+    if (onClose) onClose();
+  };
+
+  const handleAccountClick = () => {
+    if (onOpenAccount) onOpenAccount();
+    if (onClose) onClose();
   };
 
   return (
@@ -32,10 +37,8 @@ const UserMenu = ({ onLogout, onClose }) => {
             Обране
           </Link>
         </li>
-        <li>
-          <Link to="/account" onClick={handleMenuItemClick}>
-            Обліковий запис
-          </Link>
+        <li onClick={handleAccountClick} style={{ cursor: "pointer" }}>
+          Обліковий запис
         </li>
         <li onClick={handleLogout} style={{ cursor: "pointer" }}>
           Вийти
@@ -47,7 +50,8 @@ const UserMenu = ({ onLogout, onClose }) => {
 
 UserMenu.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired, // Додаємо проп для закриття меню
+  onClose: PropTypes.func.isRequired,
+  onOpenAccount: PropTypes.func.isRequired,
 };
 
 export default UserMenu;
