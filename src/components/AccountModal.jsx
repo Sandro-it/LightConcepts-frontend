@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { FaUser } from "react-icons/fa";
 import styles from "../styles/UserAccount.module.css";
 import {
   changePassword,
@@ -128,6 +129,7 @@ const AccountModal = ({ onClose }) => {
     }
   };
 
+  // Клік по підкладці (поза панеллю) закриває все вікно
   const handleBackdropMouseDown = (e) => {
     setMouseDownOnBackdrop(e.target === e.currentTarget);
   };
@@ -182,13 +184,19 @@ const AccountModal = ({ onClose }) => {
           ✕
         </button>
 
-        <h1>Обліковий запис</h1>
+        <h1 className={styles.title}>Обліковий запис</h1>
         <div className={styles.avatarContainer}>
-          <img
-            src={userData.avatar || "https://via.placeholder.com/120"}
-            alt="Аватар користувача"
-            className={styles.avatarImage}
-          />
+          {userData.avatar ? (
+            <img
+              src={userData.avatar}
+              alt="Аватар користувача"
+              className={styles.avatarImage}
+            />
+          ) : (
+            <div className={styles.avatarPlaceholder}>
+              <FaUser />
+            </div>
+          )}
           <button className={styles.avatarButton} onClick={handleUploadAvatar}>
             Завантажити новий аватар
           </button>
