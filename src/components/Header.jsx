@@ -8,7 +8,6 @@ import MainMenu from "./MainMenu";
 import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import AuthForm from "./AuthForm";
-import AccountModal from "./AccountModal";
 import { logout, getCurrentUser } from "../services/authService";
 import styles from "../styles/Header.module.css";
 
@@ -19,7 +18,6 @@ const Header = () => {
   const [authMode, setAuthMode] = useState("login");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
-  const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const [username, setUsername] = useState("");
   const userIconRef = useRef(null);
 
@@ -63,19 +61,6 @@ const Header = () => {
 
   const toggleUserMenu = () => {
     setUserMenuOpen((prev) => !prev);
-  };
-
-  const openAccountModal = () => {
-    setAccountModalVisible(true);
-  };
-
-  const closeAccountModal = () => {
-    setAccountModalVisible(false);
-    if (isAuthenticated) {
-      getCurrentUser()
-        .then((data) => setUsername(data.username || ""))
-        .catch(() => {});
-    }
   };
 
   const handleOutsideClick = (e) => {
@@ -136,7 +121,6 @@ const Header = () => {
                         username={username}
                         onLogout={handleLogout}
                         onClose={() => setUserMenuOpen(false)}
-                        onOpenAccount={openAccountModal}
                       />
                     )}
                   </>
@@ -160,9 +144,6 @@ const Header = () => {
           onClose={closeAuthForm}
           onLoginSuccess={() => setIsAuthenticated(true)}
         />
-      )}
-      {isAccountModalVisible && (
-        <AccountModal onClose={closeAccountModal} />
       )}
     </header>
   );

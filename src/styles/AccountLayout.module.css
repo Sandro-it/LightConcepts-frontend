@@ -1,0 +1,69 @@
+.accountPage {
+  padding: 20px;
+}
+
+.subMenu {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.subMenuLink {
+  padding: 10px 15px;
+  background-color: #0275d8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+}
+
+.subMenuLink:hover {
+  background-color: #025aa5;
+}
+
+[data-theme="dark"] .subMenuLink {
+  background-color: #444;
+}
+
+[data-theme="dark"] .subMenuLink:hover {
+  background-color: #666;
+}
+
+.subMenuLinkActive {
+  background-color: #025aa5;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .subMenuLinkActive {
+  background-color: #666;
+}
+
+.backButton {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #6c757d;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.backButton:hover {
+  background-color: #5a6268;
+}
+
+[data-theme="dark"] .backButton {
+  background-color: #333;
+}
+
+[data-theme="dark"] .backButton:hover {
+  background-color: #555;
+}

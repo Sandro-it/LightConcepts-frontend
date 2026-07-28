@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/UserMenu.module.css";
 import { logout } from "../services/authService";
 
-const UserMenu = ({ username, onLogout, onClose, onOpenAccount }) => {
+const UserMenu = ({ username, onLogout, onClose }) => {
   const handleLogout = () => {
     logout();
     onLogout();
@@ -14,17 +14,17 @@ const UserMenu = ({ username, onLogout, onClose, onOpenAccount }) => {
     if (onClose) onClose();
   };
 
-  const handleAccountClick = () => {
-    if (onOpenAccount) onOpenAccount();
-    if (onClose) onClose();
-  };
-
   return (
     <div className={styles.userMenu}>
       {username && (
         <div className={styles.userMenuGreeting}>Вітаємо, {username}!</div>
       )}
       <ul>
+        <li>
+          <Link to="/account" onClick={handleMenuItemClick}>
+            Обліковий запис
+          </Link>
+        </li>
         <li>
           <Link to="/orders" onClick={handleMenuItemClick}>
             Мої замовлення
@@ -40,9 +40,6 @@ const UserMenu = ({ username, onLogout, onClose, onOpenAccount }) => {
             Обране
           </Link>
         </li>
-        <li onClick={handleAccountClick} style={{ cursor: "pointer" }}>
-          Обліковий запис
-        </li>
         <li onClick={handleLogout} style={{ cursor: "pointer" }}>
           Вийти
         </li>
@@ -55,7 +52,6 @@ UserMenu.propTypes = {
   username: PropTypes.string,
   onLogout: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onOpenAccount: PropTypes.func.isRequired,
 };
 
 export default UserMenu;

@@ -1,30 +1,32 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header"; // Імпортуємо Header компонент
-import Footer from "./components/Footer"; // Імпортуємо Footer компонент
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import ResiliencePage from "./pages/ResiliencePage";
 import ProductsPage from "./pages/ProductsPage";
-import ProductDetail from "./pages/ProductDetail"; // Імпортуємо сторінку деталей товару
+import ProductDetail from "./pages/ProductDetail";
 import CategoryPage from "./pages/CategoryPage";
+import AccountLayout from "./components/AccountLayout";
+import AccountPage from "./pages/AccountPage";
+import OrdersPage from "./pages/OrdersPage";
+import AddressesPage from "./pages/AddressesPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import { categories } from "./config/categories";
-import { useTranslation } from "react-i18next"; // Імпортуємо useTranslation з react-i18next
-import "./App.css"; // Імпортуємо CSS файл зі стилями для App
+import { useTranslation } from "react-i18next";
+import "./App.css";
 
 const App = () => {
-  const { t } = useTranslation(); // Використовуємо хук перекладу
+  const { t } = useTranslation();
 
   return (
     <div className="app">
-      {/* Загальний контейнер додатку */}
       <div className="container">
-        <Header /> {/* Додаємо Header компонент зверху */}
+        <Header />
       </div>
       <main className="content container">
-        {/* Головний контент сторінки з класами "content" та "container" */}
         <Routes>
           <Route path="/resilience" element={<ResiliencePage />} />
           <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:id" element={<ProductDetail />} />{" "}
-          {/* Роут для сторінки деталей товару */}
+          <Route path="/products/:id" element={<ProductDetail />} />
           {Object.values(categories).map((config) => (
             <Route
               key={config.path}
@@ -32,9 +34,15 @@ const App = () => {
               element={<CategoryPage config={config} />}
             />
           ))}
+          <Route element={<AccountLayout />}>
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/addresses" element={<AddressesPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+          </Route>
         </Routes>
       </main>
-      <Footer /> {/* Додаємо Footer компонент внизу */}
+      <Footer />
     </div>
   );
 };
