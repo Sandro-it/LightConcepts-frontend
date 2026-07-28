@@ -32,7 +32,7 @@ export const register = async (username, email, password) => {
 // Поточний користувач
 export const getCurrentUser = async () => {
   try {
-    const response = await apiClient.get("/users/me");
+    const response = await apiClient.get("/users/me?populate=avatar");
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
