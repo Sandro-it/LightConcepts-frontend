@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
 import { getImageUrl } from "../utils/getImageUrl";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useFavorites } from "../context/FavoritesContext";
 import styles from "../styles/ProductDetail.module.css";
 
 const ProductDetail = () => {
@@ -12,6 +14,7 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [specsOpen, setSpecsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -19,18 +22,15 @@ const ProductDetail = () => {
         const response = await apiClient.get(
           `/products?filters[id][$eq]=${id}&populate=*`
         );
-        console.log("Response data:", response.data);
         const productData = response.data.data[0];
         if (productData) {
           setProduct(productData);
-          console.log("Product data set:", productData);
 
           const mainImageUrl = getImageUrl(
             productData.mainImage?.formats?.large?.url ||
               productData.mainImage?.url
           );
           setSelectedImage(mainImageUrl);
-          console.log("Main image URL set:", mainImageUrl);
         } else {
           setError("Продукт не знайдено");
         }
@@ -46,15 +46,8 @@ const ProductDetail = () => {
   }, [id]);
 
   if (loading) return <p>Завантаження...</p>;
-  if (error) {
-    console.error("Detailed error:", error);
-    return <p>{error}</p>;
-  }
-
-  if (!product) {
-    console.warn("Продукт відсутній після завантаження.");
-    return <p>Продукт не знайдено</p>;
-  }
+  if (error) return <p>{error}</p>;
+  if (!product) return <p>Продукт не знайдено</p>;
 
   const {
     name = "Назва відсутня",
@@ -65,12 +58,12 @@ const ProductDetail = () => {
     category,
     sub_category,
     specifications,
-    mainImage,
     additionalImages = [],
   } = product;
 
   const categoryName = category?.name || "Категорія не вказана";
   const subCategoryName = sub_category?.name || "Підкатегорія не вказана";
+  const favorite = isFavorite(product.id);
 
   const generateCategoryPath = (category) => {
     if (!category) return "#";
@@ -92,19 +85,16 @@ const ProductDetail = () => {
       case '"незламність"':
         return "/resilience";
       default:
-        console.warn("Unknown category:", category);
         return "#";
     }
   };
 
   const handleThumbnailClick = (url) => {
-    console.log("Thumbnail clicked, URL:", url);
     setSelectedImage(url);
   };
 
   const toggleSpecifications = () => {
     setSpecsOpen(!specsOpen);
-    console.log("Specifications toggled:", specsOpen);
   };
 
   return (
@@ -164,6 +154,14 @@ const ProductDetail = () => {
           <p className={styles.status}>
             {available ? "В наявності" : "Немає в наявності"}
           </p>
+          <button
+            type="button"
+            className={styles.favoriteButton}
+            onClick={() => toggleFavorite(product.id)}
+          >
+            {favorite ? <FaHeart /> : <FaRegHeart />}
+            {favorite ? "В обраному" : "Додати в обране"}
+          </button>
         </div>
 
         <div className={styles.addToCartSection}>

@@ -9,6 +9,7 @@ import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import AuthForm from "./AuthForm";
 import { logout, getCurrentUser } from "../services/authService";
+import { useFavorites } from "../context/FavoritesContext";
 import styles from "../styles/Header.module.css";
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
   const userIconRef = useRef(null);
+  const { reloadFavorites } = useFavorites();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -57,6 +59,7 @@ const Header = () => {
     logout();
     setIsAuthenticated(false);
     setUserMenuOpen(false);
+    reloadFavorites();
   };
 
   const toggleUserMenu = () => {
@@ -142,7 +145,10 @@ const Header = () => {
         <AuthForm
           mode={authMode}
           onClose={closeAuthForm}
-          onLoginSuccess={() => setIsAuthenticated(true)}
+          onLoginSuccess={() => {
+            setIsAuthenticated(true);
+            reloadFavorites();
+          }}
         />
       )}
     </header>

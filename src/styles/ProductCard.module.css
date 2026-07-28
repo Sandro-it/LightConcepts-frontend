@@ -1,46 +1,54 @@
-/* src/styles/ProductCard.module.css */
 .productCard {
+  position: relative;
   border: 1px solid #ddd;
   padding: 15px;
   text-align: center;
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  /* gap: 5px; */
   justify-content: space-between;
-  height: 100%; /* Задаємо повну висоту картки */
-  /* margin: 0; */
-  overflow: hidden; /* Обрізаємо вміст, що виходить за межі */
-  box-sizing: border-box; /* Враховуємо padding у розмірах */
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .productCard:hover {
   transform: scale(1.05);
 }
 
+.favoriteButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #d9534f;
+  font-size: 16px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.favoriteButton:hover {
+  transform: scale(1.15);
+  background: rgba(255, 255, 255, 1);
+}
+
 .productImage {
-  /* max-width: 100%; Зображення займатиме всю ширину контейнера */
   width: 100%;
-  height: auto; /* Зберігаємо співвідношення сторін */
-  object-fit: contain; /* Забезпечуємо відображення всього зображення, не обрізаючи його */
-  /* margin-bottom: 10px; */
+  height: auto;
+  object-fit: contain;
   align-self: flex-start;
 }
 
-/* .productCard p {
-    margin: 0;
-  }
-  
-  .productCard h3 {
-    margin: 0;
-  } */
-
 .productInfo {
-  /* display: flex;
-    flex-direction: column;
-    justify-content: flex-start; Розміщення назви та ціни внизу картки
-    flex-grow: 1; Забезпечує заповнення простору */
-  margin-top: auto; /* Прив'язуємо цей блок до нижньої частини картки */
+  margin-top: auto;
 }
 
 .productName {
