@@ -10,7 +10,11 @@ import AccountPage from "./pages/AccountPage";
 import OrdersPage from "./pages/OrdersPage";
 import AddressesPage from "./pages/AddressesPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrderSuccessPage from "./pages/OrderSuccessPage";
 import { FavoritesProvider } from "./context/FavoritesContext";
+import { CartProvider } from "./context/CartContext";
 import { categories } from "./config/categories";
 import { useTranslation } from "react-i18next";
 import "./App.css";
@@ -20,32 +24,37 @@ const App = () => {
 
   return (
     <FavoritesProvider>
-      <div className="app">
-        <div className="container">
-          <Header />
+      <CartProvider>
+        <div className="app">
+          <div className="container">
+            <Header />
+          </div>
+          <main className="content container">
+            <Routes>
+              <Route path="/resilience" element={<ResiliencePage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              {Object.values(categories).map((config) => (
+                <Route
+                  key={config.path}
+                  path={config.path}
+                  element={<CategoryPage config={config} />}
+                />
+              ))}
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/order-success" element={<OrderSuccessPage />} />
+              <Route element={<AccountLayout />}>
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/addresses" element={<AddressesPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+              </Route>
+            </Routes>
+          </main>
+          <Footer />
         </div>
-        <main className="content container">
-          <Routes>
-            <Route path="/resilience" element={<ResiliencePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            {Object.values(categories).map((config) => (
-              <Route
-                key={config.path}
-                path={config.path}
-                element={<CategoryPage config={config} />}
-              />
-            ))}
-            <Route element={<AccountLayout />}>
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/addresses" element={<AddressesPage />} />
-              <Route path="/favorites" element={<FavoritesPage />} />
-            </Route>
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      </CartProvider>
     </FavoritesProvider>
   );
 };

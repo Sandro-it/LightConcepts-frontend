@@ -10,6 +10,7 @@ import UserMenu from "./UserMenu";
 import AuthForm from "./AuthForm";
 import { logout, getCurrentUser } from "../services/authService";
 import { useFavorites } from "../context/FavoritesContext";
+import { useCart } from "../context/CartContext";
 import styles from "../styles/Header.module.css";
 
 const Header = () => {
@@ -22,6 +23,7 @@ const Header = () => {
   const [username, setUsername] = useState("");
   const userIconRef = useRef(null);
   const { reloadFavorites } = useFavorites();
+  const { totalCount } = useCart();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -102,8 +104,32 @@ const Header = () => {
             <div className={styles.headerSwitchersContainer}>
               <LanguageSwitcher />
               <ThemeToggle />
-              <Link className={styles.headerIconButton} to="/cart">
+              <Link
+                className={styles.headerIconButton}
+                to="/cart"
+                style={{ position: "relative" }}
+              >
                 <FaShoppingCart />
+                {totalCount > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-6px",
+                      right: "-8px",
+                      background: "#d9534f",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      fontSize: "11px",
+                      width: "16px",
+                      height: "16px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {totalCount}
+                  </span>
+                )}
               </Link>
               <div
                 ref={userIconRef}

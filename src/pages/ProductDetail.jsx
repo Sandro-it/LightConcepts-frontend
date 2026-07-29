@@ -4,6 +4,7 @@ import { getImageUrl } from "../utils/getImageUrl";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useFavorites } from "../context/FavoritesContext";
+import { useCart } from "../context/CartContext";
 import styles from "../styles/ProductDetail.module.css";
 
 const ProductDetail = () => {
@@ -13,8 +14,11 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [specsOpen, setSpecsOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [addedMessage, setAddedMessage] = useState("");
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -97,6 +101,12 @@ const ProductDetail = () => {
     setSpecsOpen(!specsOpen);
   };
 
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    setAddedMessage("Додано до кошика!");
+    setTimeout(() => setAddedMessage(""), 2000);
+  };
+
   return (
     <div className={styles.productDetail}>
       <div className={styles.backButtonContainer}>
@@ -168,10 +178,14 @@ const ProductDetail = () => {
           <input
             type="number"
             min="1"
-            defaultValue="1"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 1)}
             className={styles.quantitySelector}
           />
-          <button className={styles.addToCartButton}>Додати до кошика</button>
+          <button className={styles.addToCartButton} onClick={handleAddToCart}>
+            Додати до кошика
+          </button>
+          {addedMessage && <p>{addedMessage}</p>}
         </div>
 
         <div

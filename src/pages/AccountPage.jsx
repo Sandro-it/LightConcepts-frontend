@@ -12,6 +12,7 @@ const AccountPage = () => {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
+    phone: "",
     avatar: "",
   });
 
@@ -33,6 +34,7 @@ const AccountPage = () => {
           setUserData({
             username: data.username || "",
             email: data.email || "",
+            phone: data.phone || "",
             avatar: data.avatar?.url || "",
           });
         })
@@ -75,7 +77,11 @@ const AccountPage = () => {
     e.preventDefault();
     setMessage("");
     try {
-      await updateUser(userData);
+      await updateUser({
+        username: userData.username,
+        email: userData.email,
+        phone: userData.phone,
+      });
       setMessage("Дані користувача успішно оновлено!");
     } catch (error) {
       setMessage("Помилка оновлення даних.");
@@ -169,6 +175,17 @@ const AccountPage = () => {
             name="email"
             value={userData.email}
             onChange={handleUserDataChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="phone">Телефон</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={userData.phone}
+            onChange={handleUserDataChange}
+            placeholder="+380..."
           />
         </div>
         <button type="submit">Оновити дані</button>
