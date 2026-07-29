@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { createOrder } from "../services/orderService";
 import { getCurrentUser } from "../services/authService";
+import { getAddresses } from "../services/addressService";
 
 const CheckoutPage = () => {
   const { items, totalPrice, clearCart } = useCart();
@@ -16,18 +17,48 @@ const CheckoutPage = () => {
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
+
+  const applyAddress = (address) => {
+    setSelectedAddressId(String(address.id));
+    setRecipientName(address.recipientName || "");
+    setRecipientPhone(address.recipientPhone || "");
+    setDeliveryMethod(address.deliveryMethod || "branch");
+    setNovaPoshtaCity(address.novaPoshtaCity || "");
+    setNovaPoshtaWarehouse(address.novaPoshtaWarehouse || "");
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      getCurrentUser()
-        .then((data) => {
-          if (data.username) setRecipientName(data.username);
-          if (data.phone) setRecipientPhone(data.phone);
-        })
-        .catch(() => {});
-    }
+    if (!token) return;
+
+    getCurrentUser()
+      .then((data) => {
+        if (data.username) setRecipientName(data.username);
+        if (data.phone) setRecipientPhone(data.phone);
+      })
+      .catch(() => {});
+
+    getAddresses()
+      .then((addresses) => {
+        setSavedAddresses(addresses);
+        const defaultAddress = addresses.find((a) => a.isDefault);
+        if (defaultAddress) {
+          applyAddress(defaultAddress);
+        }
+      })
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleAddressSelect = (e) => {
+    const id = e.target.value;
+    setSelectedAddressId(id);
+    if (!id) return;
+    const address = savedAddresses.find((a) => String(a.id) === id);
+    if (address) applyAddress(address);
+  };
 
   if (items.length === 0) {
     return (
@@ -94,6 +125,25 @@ const CheckoutPage = () => {
         вами для невеликої передоплати (200–300 грн) — це покриває вартість
         пересилки, якщо посилку доведеться повернути без поважної причини.
       </div>
+
+      {savedAddresses.length > 0 && (
+        <div style={{ marginBottom: "15px" }}>
+          <label>Обрати збережену адресу</label>
+          <select
+            value={selectedAddressId}
+            onChange={handleAddressSelect}
+            style={{ width: "100%" }}
+          >
+            <option value="">— Ввести вручну —</option>
+            {savedAddresses.map((address) => (
+              <option key={address.id} value={address.id}>
+                {address.title || "Адреса"} — {address.recipientName}
+                {address.isDefault ? " (основна)" : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <div>
