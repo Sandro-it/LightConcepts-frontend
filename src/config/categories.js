@@ -41,7 +41,10 @@ export const categories = {
     path: "/pendant-lights",
     title: "Підвісні світильники",
     filterField: "sub_category",
-    filterValue: "Підвісні світильники",
+    // Реальна назва підкатегорії в базі — "Світильник підвісний" (не
+    // "Підвісні світильники", як title сторінки) — інакше фільтр не
+    // знаходить жодного товару.
+    filterValue: "Світильник підвісний",
     backTo: "/lights-category",
     backLabel: "Назад до Світильників",
     backButtonVariant: "sub",
