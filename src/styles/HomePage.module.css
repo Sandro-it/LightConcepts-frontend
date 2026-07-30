@@ -1,27 +1,28 @@
+/* Базові стилі для мобільних пристроїв (320px і більше) */
 .homePage {
   padding: 0;
 }
 
 .hero {
   display: flex;
-  flex-wrap: wrap;
-  min-height: 300px;
+  flex-direction: column;
 }
 
 .heroText {
-  flex: 1 1 300px;
+  width: 100%;
+  height: 180px;
   background-color: #7fa39a;
   color: #fff;
-  padding: 40px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   box-sizing: border-box;
 }
 
 .heroText h1 {
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 500;
   margin: 0;
   line-height: 1.4;
@@ -29,9 +30,10 @@
 
 .heroQuote {
   border-top: 1px solid rgba(255, 255, 255, 0.5);
-  padding-top: 10px;
+  padding-top: 8px;
   font-style: italic;
   margin: 0;
+  font-size: 13px;
 }
 
 [data-theme="dark"] .heroText {
@@ -39,10 +41,22 @@
 }
 
 .heroSlider {
-  flex: 1 1 300px;
+  width: 100%;
+  height: 180px;
   cursor: pointer;
   overflow: hidden;
-  min-height: 300px;
+  position: relative;
+}
+
+.slideTrack {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
 }
 
 .heroImage {
@@ -52,59 +66,170 @@
   display: block;
 }
 
-.heroImagePlaceholder {
-  width: 100%;
-  height: 100%;
-  background-color: #ddd;
+/* ==== Блоки плиток ==== */
+
+.blocksWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
 }
 
-.tileGrid {
+.block {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 4px;
+  height: 200px;
 }
 
-.productTile,
-.categoryTile {
-  display: block;
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  text-decoration: none;
-}
-
-.productTileImage {
+.tileImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.categoryTile {
+/* Блок 1 і 3: вертикаль у колонці 1 */
+.tallTile {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: block;
+  overflow: hidden;
+}
+
+/* Блок 1 і 3: дві квадратні у колонці 2 */
+.squareTileTop {
+  grid-column: 2;
+  grid-row: 1;
+  display: block;
+  overflow: hidden;
+}
+
+.squareTileBottom {
+  grid-column: 2;
+  grid-row: 2;
+  display: block;
+  overflow: hidden;
+}
+
+/* Блок 2: вертикаль у колонці 2 (посередині) */
+.tallTileMiddle {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: block;
+  overflow: hidden;
+}
+
+/* Блок 2: дві квадратні у колонці 3 (справа) */
+.squareTileTopRight {
+  grid-column: 3;
+  grid-row: 1;
+  display: block;
+  overflow: hidden;
+}
+
+.squareTileBottomRight {
+  grid-column: 3;
+  grid-row: 2;
+  display: block;
+  overflow: hidden;
+}
+
+/* Плашка + фото: займає свою колонку повністю (2 рядки),
+   але всередині ділиться 1/3 (плашка) до 2/3 (фото) через flex,
+   а не порівну по grid-рядках */
+.labelPhotoTile {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Коли плашка+фото — перша колонка (блок 2) */
+.block > .labelPhotoTile:first-child {
+  grid-column: 1;
+}
+
+.labelPart {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0275d8;
+  background-color: #7fa39a;
   color: #fff;
-  font-size: 20px;
   font-weight: 600;
+  font-size: 13px;
   text-align: center;
-  padding: 15px;
+  text-decoration: none;
+  padding: 6px;
 }
 
-.categoryTile:hover {
-  background-color: #025aa5;
+.labelPart:hover {
+  background-color: #6a8c83;
 }
 
-[data-theme="dark"] .categoryTile {
-  background-color: #444444;
+[data-theme="dark"] .labelPart {
+  background-color: #5f7a73;
 }
 
-[data-theme="dark"] .categoryTile:hover {
-  background-color: #666666;
+[data-theme="dark"] .labelPart:hover {
+  background-color: #4d635d;
 }
 
-@media (max-width: 600px) {
-  .tileGrid {
-    grid-template-columns: repeat(2, 1fr);
+.photoPart {
+  flex: 2;
+  display: block;
+  overflow: hidden;
+}
+
+/* Адаптивні стилі для планшетів (700px і більше) */
+@media (min-width: 700px) {
+  .hero {
+    flex-direction: row;
+    height: 240px;
+  }
+
+  .heroText,
+  .heroSlider {
+    width: 50%;
+    height: 100%;
+  }
+
+  .heroText h1 {
+    font-size: 22px;
+  }
+
+  .block {
+    height: 240px;
+  }
+
+  .labelPart {
+    font-size: 15px;
+  }
+}
+
+/* Адаптивні стилі для десктопів (900px і більше) */
+@media (min-width: 900px) {
+  .hero {
+    height: 280px;
+  }
+
+  .heroText {
+    padding: 30px;
+  }
+
+  .heroText h1 {
+    font-size: 26px;
+  }
+
+  .block {
+    height: 280px;
+  }
+
+  .labelPart {
+    font-size: 17px;
   }
 }
