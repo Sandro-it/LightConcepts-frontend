@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   FaTelegramPlane,
   FaViber,
@@ -14,15 +15,12 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
-        {/* Рядок з телефоном */}
         <div className={styles.phoneRow}>
           <FaPhone className={styles.icon} />
           <span>+380969135651</span>
         </div>
 
-        {/* Рядок з іконками месенджерів та соцмереж */}
         <div className={styles.iconRow}>
-          {/* Іконки месенджерів */}
           <div className={styles.socialIcons}>
             <a
               href="https://t.me/SvitliIdei"
@@ -47,12 +45,11 @@ const Footer = () => {
             >
               <FaWhatsapp className={`${styles.icon} ${styles.iconWhatsapp}`} />
             </a>
-            <a href="#contactForm" className={styles.icon}>
+            <Link to="/contact" className={styles.icon}>
               <FaEnvelope className={`${styles.icon} ${styles.iconEmail}`} />
-            </a>
+            </Link>
           </div>
 
-          {/* Іконки соцмереж */}
           <div className={styles.socialLinks}>
             <a
               href="https://www.facebook.com/svitli.com.ua"

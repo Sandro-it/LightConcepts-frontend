@@ -14,6 +14,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import ShippingPage from "./pages/ShippingPage";
+import ContactPage from "./pages/ContactPage";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
 import { categories } from "./config/categories";
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/order-success" element={<OrderSuccessPage />} />
               <Route path="/shipping" element={<ShippingPage />} />
+              <Route path="/contact" element={<ContactPage />} />
               <Route element={<AccountLayout />}>
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
