@@ -1,0 +1,110 @@
+.homePage {
+  padding: 0;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 300px;
+}
+
+.heroText {
+  flex: 1 1 300px;
+  background-color: #7fa39a;
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+.heroText h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.heroQuote {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  padding-top: 10px;
+  font-style: italic;
+  margin: 0;
+}
+
+[data-theme="dark"] .heroText {
+  background-color: #5f7a73;
+}
+
+.heroSlider {
+  flex: 1 1 300px;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.heroImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.tileGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.productTile,
+.categoryTile {
+  display: block;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.productTileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0275d8;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  padding: 15px;
+}
+
+.categoryTile:hover {
+  background-color: #025aa5;
+}
+
+[data-theme="dark"] .categoryTile {
+  background-color: #444444;
+}
+
+[data-theme="dark"] .categoryTile:hover {
+  background-color: #666666;
+}
+
+@media (max-width: 600px) {
+  .tileGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
