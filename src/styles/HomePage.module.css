@@ -1,6 +1,7 @@
 /* Базові стилі для мобільних пристроїв (320px і більше) */
 .homePage {
-  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .hero {
@@ -8,9 +9,14 @@
   flex-direction: column;
 }
 
-.heroText {
+.heroText,
+.heroSlider {
   width: 100%;
-  height: 180px;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+}
+
+.heroText {
   background-color: #7fa39a;
   color: #fff;
   padding: 20px;
@@ -18,7 +24,6 @@
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  box-sizing: border-box;
 }
 
 .heroText h1 {
@@ -41,8 +46,6 @@
 }
 
 .heroSlider {
-  width: 100%;
-  height: 180px;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -78,9 +81,8 @@
 .block {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: auto auto;
   gap: 4px;
-  height: 200px;
 }
 
 .tileImage {
@@ -90,7 +92,7 @@
   display: block;
 }
 
-/* Блок 1 і 3: вертикаль у колонці 1 */
+/* Блок 1 і 3: вертикаль у колонці 1 (висота = дві квадратні клітинки + gap, автоматично) */
 .tallTile {
   grid-column: 1;
   grid-row: 1 / span 2;
@@ -98,10 +100,11 @@
   overflow: hidden;
 }
 
-/* Блок 1 і 3: дві квадратні у колонці 2 */
+/* Блок 1 і 3: дві КВАДРАТНІ клітинки у колонці 2 */
 .squareTileTop {
   grid-column: 2;
   grid-row: 1;
+  aspect-ratio: 1 / 1;
   display: block;
   overflow: hidden;
 }
@@ -109,6 +112,7 @@
 .squareTileBottom {
   grid-column: 2;
   grid-row: 2;
+  aspect-ratio: 1 / 1;
   display: block;
   overflow: hidden;
 }
@@ -121,10 +125,11 @@
   overflow: hidden;
 }
 
-/* Блок 2: дві квадратні у колонці 3 (справа) */
+/* Блок 2: дві КВАДРАТНІ клітинки у колонці 3 (справа) */
 .squareTileTopRight {
   grid-column: 3;
   grid-row: 1;
+  aspect-ratio: 1 / 1;
   display: block;
   overflow: hidden;
 }
@@ -132,19 +137,18 @@
 .squareTileBottomRight {
   grid-column: 3;
   grid-row: 2;
+  aspect-ratio: 1 / 1;
   display: block;
   overflow: hidden;
 }
 
-/* Плашка + фото: займає свою колонку повністю (2 рядки),
-   але всередині ділиться 1/3 (плашка) до 2/3 (фото) через flex,
-   а не порівну по grid-рядках */
+/* Плашка + фото: висота дорівнює висоті двох квадратних клітинок поруч
+   (автоматично, бо grid-row span 2), всередині ділиться 1/3 до 2/3 через flex */
 .labelPhotoTile {
   grid-column: 3;
   grid-row: 1 / span 2;
   display: flex;
   flex-direction: column;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -189,21 +193,15 @@
 @media (min-width: 700px) {
   .hero {
     flex-direction: row;
-    height: 240px;
   }
 
   .heroText,
   .heroSlider {
     width: 50%;
-    height: 100%;
   }
 
   .heroText h1 {
     font-size: 22px;
-  }
-
-  .block {
-    height: 240px;
   }
 
   .labelPart {
@@ -213,20 +211,12 @@
 
 /* Адаптивні стилі для десктопів (900px і більше) */
 @media (min-width: 900px) {
-  .hero {
-    height: 280px;
-  }
-
   .heroText {
     padding: 30px;
   }
 
   .heroText h1 {
     font-size: 26px;
-  }
-
-  .block {
-    height: 280px;
   }
 
   .labelPart {
