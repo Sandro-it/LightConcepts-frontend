@@ -1,5 +1,6 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import styles from "../styles/ContactPage.module.css";
 
 const EMAILJS_SERVICE_ID = "service_zvjw07e";
 const EMAILJS_TEMPLATE_ID = "template_1t46cz2";
@@ -109,7 +110,7 @@ const ContactPage = () => {
             value={form.name}
             onChange={handleChange}
             required
-            style={{ width: "100%" }}
+            className={styles.formInput}
           />
         </div>
         <div>
@@ -120,7 +121,7 @@ const ContactPage = () => {
             value={form.email}
             onChange={handleChange}
             required
-            style={{ width: "100%" }}
+            className={styles.formInput}
           />
         </div>
         <div>
@@ -130,8 +131,7 @@ const ContactPage = () => {
             value={form.message}
             onChange={handleChange}
             required
-            rows={5}
-            style={{ width: "100%" }}
+            className={styles.formTextarea}
           />
         </div>
 
