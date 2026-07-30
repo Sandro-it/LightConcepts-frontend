@@ -37,3 +37,24 @@
 [data-theme="dark"] .formTextarea:focus {
   border-color: #4da3ff;
 }
+
+.contactLink {
+  color: #4da3ff;
+}
+
+.contactLink:visited {
+  color: #4da3ff;
+}
+
+.contactLink:hover {
+  color: #0275d8;
+}
+
+[data-theme="dark"] .contactLink,
+[data-theme="dark"] .contactLink:visited {
+  color: #9dbff9;
+}
+
+[data-theme="dark"] .contactLink:hover {
+  color: #cfe0ff;
+}

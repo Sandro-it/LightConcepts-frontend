@@ -70,6 +70,7 @@ const ContactPage = () => {
             href="https://t.me/SvitliIdei"
             target="_blank"
             rel="noopener noreferrer"
+            className={styles.contactLink}
           >
             t.me/SvitliIdei
           </a>
@@ -80,6 +81,7 @@ const ContactPage = () => {
             href="viber://chat?number=%2B380969135651"
             target="_blank"
             rel="noopener noreferrer"
+            className={styles.contactLink}
           >
             +380969135651
           </a>
@@ -90,6 +92,7 @@ const ContactPage = () => {
             href="https://wa.me/380969135651"
             target="_blank"
             rel="noopener noreferrer"
+            className={styles.contactLink}
           >
             +380969135651
           </a>
